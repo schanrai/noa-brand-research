@@ -1,0 +1,200 @@
+{
+  "companies": [
+    {
+      "id": "1",
+      "companyName": "TechVision Global",
+      "industry": "Technology",
+      "hqLocation": "San Francisco, CA",
+      "division": "Consumer Electronics",
+      "description": "TechVision Global is a leading innovator in consumer electronics and smart home technology, focusing on sustainable and accessible solutions for modern living.",
+      "foundingDate": "2008-05-12",
+      "regions": ["North America", "Europe", "Asia Pacific"],
+      "annualRevenue": "$2.4B",
+      "lastFunding": "$150M Series E (2022)",
+      "totalFunding": "$450M",
+      "website": "https://techvisionglobal.com",
+      "employees": 3500,
+      "targetAudience": "Tech-savvy consumers, early adopters, smart home enthusiasts",
+      "sponsorshipTypes": ["Sports Events", "Tech Conferences", "Educational Programs"],
+      "keySponsorships": ["Global Tech Summit", "Innovation Awards", "STEM Education Initiative"],
+      "strategicFocus": "Expanding smart home ecosystem and sustainable technology solutions",
+      "profileURL": "/companies/techvision",
+      "outreachProfile": "High engagement with previous partners, responsive to collaboration proposals",
+      "lastUpdated": "2023-11-15",
+      "logo": "/placeholder.svg?height=80&width=80",
+      "inCRM": true,
+      "contacts": [
+        {
+          "name": "Sarah Johnson",
+          "email": "sarah.johnson@techvisionglobal.com",
+          "title": "VP of Strategic Partnerships",
+          "source": "LinkedIn",
+          "relationshipNotes": "Met at Global Tech Summit 2023, expressed interest in sports sponsorships"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "companyName": "GreenEarth Renewables",
+      "industry": "Energy",
+      "hqLocation": "Copenhagen, Denmark",
+      "division": "Sustainable Energy",
+      "description": "GreenEarth Renewables is pioneering sustainable energy solutions with a focus on wind, solar, and hydroelectric power generation and distribution.",
+      "foundingDate": "2012-03-18",
+      "regions": ["Europe", "North America", "Africa"],
+      "annualRevenue": "$1.8B",
+      "lastFunding": "$200M Series D (2023)",
+      "totalFunding": "$350M",
+      "website": "https://greenearthrenewables.com",
+      "employees": 2800,
+      "targetAudience": "Environmentally conscious consumers, businesses transitioning to green energy",
+      "sponsorshipTypes": ["Environmental Initiatives", "Sustainability Conferences", "Community Projects"],
+      "keySponsorships": ["Global Climate Summit", "Renewable Energy Expo", "Clean Water Initiative"],
+      "strategicFocus": "Expanding renewable energy infrastructure in developing markets",
+      "profileURL": "/companies/greenearth",
+      "outreachProfile": "Actively seeking partnerships aligned with sustainability goals",
+      "lastUpdated": "2023-12-05",
+      "logo": "/placeholder.svg?height=80&width=80",
+      "inCRM": false,
+      "contacts": [
+        {
+          "name": "Lars Nielsen",
+          "email": "lars.nielsen@greenearthrenewables.com",
+          "title": "Director of Corporate Partnerships",
+          "source": "Industry Conference",
+          "relationshipNotes": "Interested in co-branded sustainability initiatives"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "companyName": "HealthPlus Innovations",
+      "industry": "Healthcare",
+      "hqLocation": "Boston, MA",
+      "division": "Medical Devices",
+      "description": "HealthPlus Innovations develops cutting-edge medical devices and healthcare technology solutions focused on improving patient outcomes and healthcare efficiency.",
+      "foundingDate": "2010-09-22",
+      "regions": ["North America", "Europe", "Asia"],
+      "annualRevenue": "$1.2B",
+      "lastFunding": "$120M Series C (2021)",
+      "totalFunding": "$280M",
+      "website": "https://healthplusinnovations.com",
+      "employees": 1800,
+      "targetAudience": "Healthcare providers, hospitals, medical professionals",
+      "sponsorshipTypes": ["Medical Conferences", "Health Awareness Campaigns", "Research Initiatives"],
+      "keySponsorships": ["Global Health Summit", "Medical Innovation Awards", "Healthcare Accessibility Program"],
+      "strategicFocus": "Expanding telemedicine solutions and AI-driven diagnostics",
+      "profileURL": "/companies/healthplus",
+      "outreachProfile": "Selective about partnerships, focuses on evidence-based collaborations",
+      "lastUpdated": "2023-10-28",
+      "logo": "/placeholder.svg?height=80&width=80",
+      "inCRM": true,
+      "contacts": [
+        {
+          "name": "Dr. Michael Chen",
+          "email": "michael.chen@healthplusinnovations.com",
+          "title": "Chief Innovation Officer",
+          "source": "Medical Technology Conference",
+          "relationshipNotes": "Looking for partnerships in preventive healthcare initiatives"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "companyName": "UrbanMove Transportation",
+      "industry": "Transportation",
+      "hqLocation": "Berlin, Germany",
+      "division": "Urban Mobility",
+      "description": "UrbanMove is revolutionizing urban transportation with sustainable, efficient mobility solutions including electric vehicles and smart city integration.",
+      "foundingDate": "2015-07-14",
+      "regions": ["Europe", "North America"],
+      "annualRevenue": "$850M",
+      "lastFunding": "$100M Series B (2022)",
+      "totalFunding": "$180M",
+      "website": "https://urbanmove.com",
+      "employees": 1200,
+      "targetAudience": "Urban commuters, city planners, environmentally conscious travelers",
+      "sponsorshipTypes": ["Urban Development Projects", "Sustainability Events", "Tech Conferences"],
+      "keySponsorships": ["Smart City Expo", "Sustainable Transport Summit", "Urban Innovation Challenge"],
+      "strategicFocus": "Expanding electric vehicle network and smart city integration",
+      "profileURL": "/companies/urbanmove",
+      "outreachProfile": "Open to innovative partnerships that align with sustainable urban mobility",
+      "lastUpdated": "2023-11-30",
+      "logo": "/placeholder.svg?height=80&width=80",
+      "inCRM": false,
+      "contacts": [
+        {
+          "name": "Sophia Müller",
+          "email": "sophia.muller@urbanmove.com",
+          "title": "Head of Strategic Partnerships",
+          "source": "Smart City Conference",
+          "relationshipNotes": "Interested in co-branded urban mobility initiatives"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "companyName": "NutriWell Foods",
+      "industry": "Food & Beverage",
+      "hqLocation": "Portland, OR",
+      "division": "Organic Foods",
+      "description": "NutriWell Foods produces organic, sustainable food products with a focus on plant-based alternatives and environmentally responsible packaging.",
+      "foundingDate": "2014-02-08",
+      "regions": ["North America", "Europe"],
+      "annualRevenue": "$620M",
+      "lastFunding": "$75M Series C (2023)",
+      "totalFunding": "$130M",
+      "website": "https://nutriwellfoods.com",
+      "employees": 950,
+      "targetAudience": "Health-conscious consumers, environmentally aware shoppers, wellness enthusiasts",
+      "sponsorshipTypes": ["Wellness Events", "Sustainability Initiatives", "Community Programs"],
+      "keySponsorships": ["Organic Food Festival", "Sustainable Packaging Summit", "Community Garden Initiative"],
+      "strategicFocus": "Expanding plant-based product line and sustainable packaging solutions",
+      "profileURL": "/companies/nutriwell",
+      "outreachProfile": "Actively seeking partnerships aligned with health and sustainability values",
+      "lastUpdated": "2023-12-10",
+      "logo": "/placeholder.svg?height=80&width=80",
+      "inCRM": true,
+      "contacts": [
+        {
+          "name": "Emma Rodriguez",
+          "email": "emma.rodriguez@nutriwellfoods.com",
+          "title": "Director of Brand Partnerships",
+          "source": "Organic Products Expo",
+          "relationshipNotes": "Interested in wellness-focused collaborative campaigns"
+        }
+      ]
+    }
+  ],
+  "recentlyViewed": ["1", "3", "5"],
+  "chatHistory": [
+    {
+      "role": "assistant",
+      "content": "Hey Chris, which company would you like to research today?"
+    },
+    {
+      "role": "user",
+      "content": "I'm looking for companies in the renewable energy sector"
+    },
+    {
+      "role": "assistant",
+      "content": "Great! I found several companies in the renewable energy sector. Are you interested in a specific region?"
+    },
+    {
+      "role": "user",
+      "content": "Let's focus on Europe"
+    },
+    {
+      "role": "assistant",
+      "content": "Perfect! In Europe's renewable energy sector, I found GreenEarth Renewables based in Copenhagen. Would you like to see their profile?"
+    },
+    {
+      "role": "user",
+      "content": "Yes, show me GreenEarth Renewables"
+    },
+    {
+      "role": "assistant",
+      "content": "Here's the profile for GreenEarth Renewables. Let me know if you need any specific information about them."
+    }
+  ]
+}

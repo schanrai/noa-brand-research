@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary Background System - Subtle cream tones */
+    --color-main: #faf9f6; /* Primary background - very light cream */
+    --color-edge: #f7f5f1; /* Secondary background - subtle cream */
+    --color-deep: #f2efea; /* Accent background - slightly deeper cream */
+
+    /* Text & UI Colors */
+    --color-black: #000000; /* Primary text, high contrast */
+    --color-gray-600: #525252; /* Secondary text */
+    --color-gray-400: #a3a3a3; /* Muted text */
+    --color-gray-200: #e5e5e5; /* Borders, dividers */
+    --color-white: #ffffff; /* Cards, overlays */
+    --color-muted: #c8bfbf; /* Warm accent gray */
+
+    /* Shadcn variables mapped to our color system */
+    --background: var(--color-main);
+    --foreground: var(--color-black);
+    --card: var(--color-white);
+    --card-foreground: var(--color-black);
+    --popover: var(--color-white);
+    --popover-foreground: var(--color-black);
+    --primary: var(--color-black);
+    --primary-foreground: var(--color-white);
+    --secondary: var(--color-edge);
+    --secondary-foreground: var(--color-black);
+    --muted: var(--color-edge);
+    --muted-foreground: var(--color-gray-600);
+    --accent: var(--color-deep);
+    --accent-foreground: var(--color-black);
+    --destructive: #dc2626;
+    --destructive-foreground: var(--color-white);
+    --border: var(--color-gray-200);
+    --input: var(--color-white);
+    --ring: var(--color-black);
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-color: var(--color-main);
+    background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.01) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  /* Smooth transitions for all interactive elements */
+  button,
+  a,
+  [role="button"] {
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Hover scale effect */
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  /* Custom spacing scale */
+  .space-16 {
+    margin: 16px;
+  }
+  .space-24 {
+    margin: 24px;
+  }
+  .space-48 {
+    margin: 48px;
+  }
+  .space-96 {
+    margin: 96px;
+  }
+
+  .p-16 {
+    padding: 16px;
+  }
+  .p-24 {
+    padding: 24px;
+  }
+  .p-48 {
+    padding: 48px;
+  }
+  .p-96 {
+    padding: 96px;
+  }
+
+  .gap-16 {
+    gap: 16px;
+  }
+  .gap-24 {
+    gap: 24px;
+  }
+  .gap-48 {
+    gap: 48px;
+  }
+  .gap-96 {
+    gap: 96px;
+  }
+}
+
+/* Custom component styles */
+@layer components {
+  .card-premium {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .card-premium:hover {
+    @apply shadow-md;
+    transform: translateY(-2px);
+  }
+
+  .text-heading {
+    @apply font-bold uppercase tracking-wide;
+  }
+
+  .text-body {
+    @apply font-normal;
+  }
+
+  .btn-premium {
+    @apply px-6 py-3 font-medium uppercase tracking-wide transition-all duration-200;
+  }
+
+  .btn-premium:hover {
+    transform: scale(1.05);
+  }
+}
