@@ -17,10 +17,25 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
     <Card>
       <CardContent className="p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="report">Full Report</TabsTrigger>
-            <TabsTrigger value="contacts">Contacts</TabsTrigger>
+          <TabsList className="mb-4 bg-edge border border-gray-200 p-1 rounded-lg">
+            <TabsTrigger
+              value="overview"
+              className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:shadow-sm text-gray-600 hover:text-black transition-colors"
+            >
+              Overview
+            </TabsTrigger>
+            <TabsTrigger
+              value="report"
+              className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:shadow-sm text-gray-600 hover:text-black transition-colors"
+            >
+              Full Report
+            </TabsTrigger>
+            <TabsTrigger
+              value="contacts"
+              className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:shadow-sm text-gray-600 hover:text-black transition-colors"
+            >
+              Contacts
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-4">
