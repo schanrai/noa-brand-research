@@ -110,9 +110,9 @@ export default function CoPilotInterface({ stage, onResponse }: CoPilotInterface
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col pt-24 px-24">
       {/* Header */}
-      <div className="mb-48 ml-24">
+      <div className="mb-48">
         <div className="flex items-center gap-3 mb-16">
           <Network className="h-5 w-5 text-gray-600" />
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
