@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search } from "lucide-react"
+import { Search, Database } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface LeftSidebarProps {
@@ -33,7 +33,13 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
     <div className="w-80 border-r border-gray-200 bg-edge p-24">
       <div className="space-y-24">
         <div>
-          <h2 className="mb-16 text-sm font-bold uppercase tracking-wide">Search</h2>
+          <div className="flex items-center gap-2 mb-16">
+            <Database className="h-4 w-4 text-gray-600" />
+            <h2 className="text-sm font-bold uppercase tracking-wide">Search CRM</h2>
+          </div>
+          <p className="text-xs text-gray-600 mb-16 leading-relaxed">
+            Search existing companies and contacts in your CRM database
+          </p>
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <Input
