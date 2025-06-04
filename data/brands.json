@@ -164,6 +164,39 @@
           "relationshipNotes": "Interested in wellness-focused collaborative campaigns"
         }
       ]
+    },
+    {
+      "id": "6",
+      "companyName": "MedCare Solutions",
+      "industry": "Healthcare",
+      "hqLocation": "Miami, FL",
+      "division": "Healthcare Technology",
+      "description": "MedCare Solutions is a leading healthcare technology company specializing in patient management systems, electronic health records, and telemedicine platforms for healthcare providers across North America.",
+      "foundingDate": "2016-11-03",
+      "regions": ["North America"],
+      "annualRevenue": "$890M",
+      "lastFunding": "$85M Series B (2022)",
+      "totalFunding": "$165M",
+      "website": "https://medcaresolutions.com",
+      "employees": 1450,
+      "targetAudience": "Healthcare providers, hospitals, medical clinics, telemedicine practitioners",
+      "sponsorshipTypes": ["Medical Conferences", "Healthcare Innovation Events", "Medical Education Programs"],
+      "keySponsorships": ["Healthcare Technology Summit", "Medical Innovation Awards", "Digital Health Conference"],
+      "strategicFocus": "Expanding telemedicine capabilities and AI-driven patient care solutions",
+      "profileURL": "/companies/medcare",
+      "outreachProfile": "Focused on partnerships that advance healthcare technology and patient outcomes",
+      "lastUpdated": "2023-12-08",
+      "logo": "/placeholder.svg?height=80&width=80",
+      "inCRM": false,
+      "contacts": [
+        {
+          "name": "Dr. Maria Gonzalez",
+          "email": "maria.gonzalez@medcaresolutions.com",
+          "title": "VP of Strategic Partnerships",
+          "source": "Healthcare Technology Conference",
+          "relationshipNotes": "Interested in partnerships focused on improving patient care through technology"
+        }
+      ]
     }
   ],
   "recentlyViewed": ["1", "3", "5"],

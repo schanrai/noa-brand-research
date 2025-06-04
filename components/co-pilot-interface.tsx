@@ -2,17 +2,10 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Send } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ScrollArea } from "@/components/ui/scroll-area"
-
-interface Message {
-  role: "assistant" | "user"
-  content: string
-}
+import { Send, Lightbulb, Star, Loader2 } from "lucide-react"
 
 interface CoPilotInterfaceProps {
   stage: "initial" | "region" | "division" | "results"
@@ -21,97 +14,171 @@ interface CoPilotInterfaceProps {
 
 export default function CoPilotInterface({ stage, onResponse }: CoPilotInterfaceProps) {
   const [userInput, setUserInput] = useState("")
-  const [messages, setMessages] = useState<Message[]>([
+  const [conversationHistory, setConversationHistory] = useState([
     {
       role: "assistant",
       content: "Hey Chris, which company would you like to research today?",
+      timestamp: new Date(),
     },
   ])
+  const [companyName, setCompanyName] = useState("")
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [processingSteps, setProcessingSteps] = useState<string[]>([])
+  const [currentStage, setCurrentStage] = useState(stage)
+
+  // Simulate LLM working in the background
+  useEffect(() => {
+    if (isProcessing) {
+      const steps = [
+        "Searching for company information...",
+        `Finding recent news about ${companyName}...`,
+        "Analyzing market position...",
+        "Gathering financial data...",
+        "Identifying key partnerships...",
+        "Compiling sponsorship history...",
+        "Analyzing target audience...",
+        "Generating comprehensive report...",
+      ]
+
+      let currentStep = 0
+      const interval = setInterval(() => {
+        if (currentStep < steps.length) {
+          setProcessingSteps((prev) => [...prev, steps[currentStep]])
+          currentStep++
+        } else {
+          clearInterval(interval)
+          // Transition to results after processing is complete
+          setTimeout(() => {
+            setIsProcessing(false)
+            onResponse("results", companyName)
+          }, 1500)
+        }
+      }, 1000)
+
+      return () => clearInterval(interval)
+    }
+  }, [isProcessing, companyName, onResponse])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!userInput.trim()) return
 
     // Add user message to conversation
-    const newUserMessage: Message = {
+    const newUserMessage = {
       role: "user",
       content: userInput,
+      timestamp: new Date(),
     }
 
-    let aiResponse = ""
-    const companyName = userInput
+    let assistantResponse = ""
+    let nextStage = ""
 
-    if (stage === "initial") {
-      aiResponse = `Great! As ${companyName} is a global company, would you like me to focus on a specific geographical market? They operate in the US, India and Japan.`
-      onResponse("region", userInput)
-    } else if (stage === "region") {
-      aiResponse = `Of course! Since ${messages.find((m) => m.role === "user")?.content || "the company"} is a conglomerate, is there a specific area of the company or division which you would like me to focus on?`
-      onResponse("division", userInput)
-    } else if (stage === "division") {
-      aiResponse =
-        "Makes sense - I'll draft an initial full report and once you approve it, I will then summarize into a concise brand summary. Sound good!"
-      onResponse("results", userInput)
+    if (currentStage === "initial") {
+      setCompanyName(userInput)
+      assistantResponse = `Great! As ${userInput} is a global company, would you like me to focus on a specific geographical market? They operate in the US, India and Japan.`
+      nextStage = "region"
+      setCurrentStage("region")
+    } else if (currentStage === "region") {
+      assistantResponse = `Of course! Since ${companyName} is a conglomerate, is there a specific area of the company or division which you would like me to focus on?`
+      nextStage = "division"
+      setCurrentStage("division")
+    } else if (currentStage === "division") {
+      assistantResponse = `Makes sense - I'll draft an initial full report and once you approve it, I will then summarize into a concise brand summary. Sound good?`
+      nextStage = "confirmation"
+      setCurrentStage("confirmation")
+    } else if (currentStage === "confirmation") {
+      // Handle user's affirmative response
+      assistantResponse = "Great! Let me gather all the relevant information for you. This might take a moment..."
+      setIsProcessing(true)
+      nextStage = "processing"
+      setCurrentStage("processing")
     }
 
-    // Add both user message and AI response to conversation
-    const newAiMessage: Message = {
+    const newAssistantMessage = {
       role: "assistant",
-      content: aiResponse,
+      content: assistantResponse,
+      timestamp: new Date(),
     }
 
-    setMessages((prev) => [...prev, newUserMessage, newAiMessage])
+    setConversationHistory((prev) => [...prev, newUserMessage, newAssistantMessage])
+
+    if (currentStage !== "confirmation" && currentStage !== "processing") {
+      onResponse(nextStage, userInput)
+    }
+
     setUserInput("")
   }
 
   return (
     <div className="flex h-full flex-col">
-      <div className="p-4 border-b">
-        <h1 className="text-lg font-semibold">NOA Research Co-Pilot</h1>
-        <p className="text-sm text-muted-foreground">The weather today is sunny with a high of 15°F.</p>
+      {/* Header */}
+      <div className="mb-48 ml-24">
+        <h1 className="text-base font-bold uppercase tracking-wide mb-16">NOA Research Co-Pilot</h1>
+        <p className="text-body text-gray-600">The weather today is sunny with a high of 15°F.</p>
       </div>
 
-      <ScrollArea className="flex-1 p-4">
-        <div className="space-y-4">
-          {messages.map((message, index) => (
-            <div key={index} className={`flex items-start gap-3 ${message.role === "user" ? "justify-end" : ""}`}>
-              {message.role === "assistant" && (
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/placeholder.svg?height=32&width=32" alt="AI" />
-                  <AvatarFallback className="text-xs">AI</AvatarFallback>
-                </Avatar>
-              )}
-              <div
-                className={`rounded-lg p-3 max-w-[80%] ${
-                  message.role === "assistant" ? "bg-muted" : "bg-primary text-primary-foreground ml-auto"
-                }`}
-              >
-                <p className="text-sm">{message.content}</p>
-              </div>
-              {message.role === "user" && (
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                  <AvatarFallback className="text-xs">C</AvatarFallback>
-                </Avatar>
-              )}
+      {isProcessing ? (
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <div className="text-center space-y-24 max-w-2xl">
+            <div className="flex items-center justify-center">
+              <Loader2 className="h-12 w-12 animate-spin text-black" />
             </div>
-          ))}
+            <h2 className="text-xl font-bold uppercase tracking-wide">Generating Brand Research</h2>
+            <div className="space-y-16 text-left">
+              {processingSteps.map((step, index) => (
+                <div key={index} className="flex items-center gap-16">
+                  <div className="w-4 h-4 rounded-full bg-black"></div>
+                  <p className="text-body text-gray-800">{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </ScrollArea>
+      ) : (
+        <>
+          {/* Conversation Thread */}
+          <div className="flex-1 space-y-24 mb-24">
+            {conversationHistory.map((message, index) => (
+              <div
+                key={index}
+                className={`flex items-start gap-16 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+              >
+                {message.role === "assistant" && (
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                    <Lightbulb className="h-4 w-4 text-gray-600" />
+                  </div>
+                )}
 
-      <div className="border-t p-4">
-        <form onSubmit={handleSubmit} className="flex gap-2">
-          <Input
-            placeholder="Type your response..."
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            className="flex-1"
-          />
-          <Button type="submit" size="icon">
-            <Send className="h-4 w-4" />
-            <span className="sr-only">Send</span>
-          </Button>
-        </form>
-      </div>
+                <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
+                  <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
+                </div>
+
+                {message.role === "user" && (
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                    <Star className="h-4 w-4 text-gray-600" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Input Area */}
+          <div className="border-t border-gray-200 pt-24">
+            <form onSubmit={handleSubmit} className="flex gap-16">
+              <Input
+                placeholder="Type your response..."
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                className="flex-1 bg-white border-gray-200"
+              />
+              <Button type="submit" size="icon" className="bg-black text-white hover:bg-gray-800">
+                <Send className="h-4 w-4" />
+                <span className="sr-only">Send</span>
+              </Button>
+            </form>
+          </div>
+        </>
+      )}
     </div>
   )
 }
