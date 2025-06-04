@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Send, Lightbulb, Star, Loader2 } from "lucide-react"
+import { Send, Lightbulb, Star, Loader2, Network } from "lucide-react"
 
 interface CoPilotInterfaceProps {
   stage: "initial" | "region" | "division" | "results"
@@ -112,9 +112,14 @@ export default function CoPilotInterface({ stage, onResponse }: CoPilotInterface
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <div className="mb-48 ml-24">
-        <h1 className="text-base font-bold uppercase tracking-wide mb-16">NOA Research Co-Pilot</h1>
-        <p className="text-body text-gray-600">The weather today is sunny with a high of 15°F.</p>
+      <div className="mb-48 ml-24 -mt-24">
+        <div className="flex items-center gap-3 mb-16">
+          <Network className="h-5 w-5 text-gray-600" />
+          <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
+        </div>
+        <p className="text-body text-gray-600">
+          Search the web and research your company using our AI-powered co-pilot
+        </p>
       </div>
 
       {isProcessing ? (
