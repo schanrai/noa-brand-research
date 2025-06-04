@@ -174,27 +174,27 @@
     },
     {
       "role": "user",
-      "content": "I would like to research Real Company"
+      "content": "I'm looking for companies in the renewable energy sector"
     },
     {
       "role": "assistant",
-      "content": "Great! As Real Company is a global company, would you like me to focus on a specific geographical market? They operate in the US, India and Japan."
+      "content": "Great! I found several companies in the renewable energy sector. Are you interested in a specific region?"
     },
     {
       "role": "user",
-      "content": "Keep it to the Indian market please"
+      "content": "Let's focus on Europe"
     },
     {
       "role": "assistant",
-      "content": "Of course! Since Real Company is a conglomerate, is there a specific area of the company or division which you would like me to focus on?"
+      "content": "Perfect! In Europe's renewable energy sector, I found GreenEarth Renewables based in Copenhagen. Would you like to see their profile?"
     },
     {
       "role": "user",
-      "content": "Yes, I'd like you to focus on their Wealth Management division"
+      "content": "Yes, show me GreenEarth Renewables"
     },
     {
       "role": "assistant",
-      "content": "Makes sense - I'll draft an initial full report and once you approve it, I will then summarize into a concise brand summary. Sound good!"
+      "content": "Here's the profile for GreenEarth Renewables. Let me know if you need any specific information about them."
     }
   ]
 }
