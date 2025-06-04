@@ -18,7 +18,7 @@ export default function RightSidebar() {
   }, [])
 
   return (
-    <div className="w-80 border-l border-gray-200 bg-edge pt-48 px-24 pb-24">
+    <div className="w-80 border-l border-gray-200 bg-edge pt-24 px-24 pb-24">
       <div className="space-y-48">
         <div>
           <h2 className="mb-24 text-sm font-bold uppercase tracking-wide">AI Co-pilot History</h2>
