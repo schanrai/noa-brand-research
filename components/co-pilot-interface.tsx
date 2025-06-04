@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Send, Lightbulb, Star, Loader2, Search } from "lucide-react"
+import { Send, Lightbulb, Star, Loader2, Globe } from "lucide-react"
 
 interface CoPilotInterfaceProps {
   stage: "initial" | "region" | "division" | "results"
@@ -115,7 +115,7 @@ export default function CoPilotInterface({ stage, onResponse }: CoPilotInterface
       <div className="mb-48 ml-24">
         <div className="flex items-center gap-3 mb-16">
           <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 bg-white">
-            <Search className="h-4 w-4 text-gray-600" />
+            <Globe className="h-4 w-4 text-gray-600" />
           </div>
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
         </div>
