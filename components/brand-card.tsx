@@ -38,9 +38,7 @@ export default function BrandCard({ company, isExpanded, onToggleExpand, onAppro
               <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">
                 {company.industry} • {company.hqLocation}
               </p>
-              <p className="text-body text-gray-600 leading-relaxed max-w-2xl">
-                {company.description.substring(0, 120)}...
-              </p>
+              <p className="text-body text-gray-600 leading-relaxed max-w-2xl">{company.description}</p>
               <div className="flex flex-wrap gap-8">
                 {company.regions.slice(0, 2).map((region: string, index: number) => (
                   <Badge key={index} variant="secondary" className="bg-edge text-black text-xs uppercase tracking-wide">
@@ -52,6 +50,24 @@ export default function BrandCard({ company, isExpanded, onToggleExpand, onAppro
                     +{company.regions.length - 2} more
                   </Badge>
                 )}
+              </div>
+              <div className="grid grid-cols-2 gap-16 mt-16">
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wide text-gray-500">Division</h4>
+                  <p className="text-sm text-gray-700">{company.division}</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wide text-gray-500">Annual Revenue</h4>
+                  <p className="text-sm text-gray-700">{company.annualRevenue}</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wide text-gray-500">Employees</h4>
+                  <p className="text-sm text-gray-700">{company.employees.toLocaleString()}</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wide text-gray-500">Strategic Focus</h4>
+                  <p className="text-sm text-gray-700">{company.strategicFocus}</p>
+                </div>
               </div>
             </div>
           </div>
