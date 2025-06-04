@@ -37,7 +37,7 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
             <Database className="h-4 w-4 text-gray-600" />
             <h2 className="text-sm font-bold uppercase tracking-wide">Search CRM</h2>
           </div>
-          <p className="text-xs text-gray-600 mb-16 leading-relaxed">
+          <p className="text-body text-gray-600 mb-16 leading-relaxed">
             Search existing companies and contacts in your CRM database
           </p>
           <div className="relative">
