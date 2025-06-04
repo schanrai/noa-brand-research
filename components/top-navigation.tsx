@@ -13,17 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-interface TopNavigationProps {
-  onTabChange?: (tab: string) => void
-}
-
-export default function TopNavigation({ onTabChange }: TopNavigationProps) {
+export default function TopNavigation() {
   const [activeTab, setActiveTab] = useState("brand-research")
-
-  const handleTabChange = (value: string) => {
-    setActiveTab(value)
-    onTabChange?.(value)
-  }
 
   return (
     <header className="flex h-20 items-center justify-between border-b border-gray-200 bg-white px-6 py-4">
@@ -36,7 +27,7 @@ export default function TopNavigation({ onTabChange }: TopNavigationProps) {
       </div>
 
       <div className="flex-grow flex justify-center">
-        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-auto">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto">
           <TabsList className="bg-edge h-12">
             <TabsTrigger
               value="brand-research"
