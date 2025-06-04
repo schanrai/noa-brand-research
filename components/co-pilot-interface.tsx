@@ -117,7 +117,9 @@ export default function CoPilotInterface({ stage, onResponse }: CoPilotInterface
           <Network className="h-5 w-5 text-gray-600" />
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
         </div>
-        <p className="text-body text-gray-600">Search the web and discover new companies using AI-powered research</p>
+        <p className="text-body text-gray-600">
+          Search the web and research your company using our AI-powered co-pilot
+        </p>
       </div>
 
       {isProcessing ? (
