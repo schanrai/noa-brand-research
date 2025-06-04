@@ -30,10 +30,10 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
   }
 
   return (
-    <div className="w-80 border-r border-gray-200 bg-edge p-24">
+    <div className="w-80 border-r border-gray-200 bg-edge pt-48 px-24 pb-24">
       <div className="space-y-24">
         <div>
-          <div className="flex items-center gap-2 mb-16">
+          <div className="flex items-center gap-2 mb-24">
             <Database className="h-4 w-4 text-gray-600" />
             <h2 className="text-sm font-bold uppercase tracking-wide">Search CRM</h2>
           </div>

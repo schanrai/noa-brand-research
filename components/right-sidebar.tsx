@@ -18,10 +18,10 @@ export default function RightSidebar() {
   }, [])
 
   return (
-    <div className="w-80 border-l border-gray-200 bg-edge p-24">
+    <div className="w-80 border-l border-gray-200 bg-edge pt-48 px-24 pb-24">
       <div className="space-y-48">
         <div>
-          <h2 className="mb-16 text-sm font-bold uppercase tracking-wide">AI Co-pilot History</h2>
+          <h2 className="mb-24 text-sm font-bold uppercase tracking-wide">AI Co-pilot History</h2>
           <ScrollArea className="h-[300px] rounded-lg border border-gray-200 bg-white p-16">
             <div className="space-y-16">
               {chatHistory.map((message, index) => (
@@ -42,7 +42,7 @@ export default function RightSidebar() {
         <Separator className="bg-gray-200" />
 
         <div>
-          <h2 className="mb-16 text-sm font-bold uppercase tracking-wide">Recently Viewed Companies</h2>
+          <h2 className="mb-24 text-sm font-bold uppercase tracking-wide">Recently Viewed Companies</h2>
           <div className="space-y-8">
             {recentlyViewed.map((company) => (
               <div
