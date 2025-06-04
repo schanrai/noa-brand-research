@@ -113,8 +113,13 @@ export default function CoPilotInterface({ stage, onResponse }: CoPilotInterface
     <div className="flex h-full flex-col">
       {/* Header */}
       <div className="mb-48 ml-24">
-        <h1 className="text-base font-bold uppercase tracking-wide mb-16">NOA Research Co-Pilot</h1>
-        <p className="text-body text-gray-600">The weather today is sunny with a high of 15°F.</p>
+        <div className="flex items-center gap-3 mb-16">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-black">
+            <Lightbulb className="h-4 w-4 text-white" />
+          </div>
+          <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
+        </div>
+        <p className="text-body text-gray-600">Search the web and discover new companies using AI-powered research</p>
       </div>
 
       {isProcessing ? (
