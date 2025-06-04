@@ -114,9 +114,7 @@ export default function CoPilotInterface({ stage, onResponse }: CoPilotInterface
       {/* Header */}
       <div className="mb-48 ml-24">
         <div className="flex items-center gap-3 mb-16">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 bg-white">
-            <Globe className="h-4 w-4 text-gray-600" />
-          </div>
+          <Globe className="h-4 w-4 text-gray-600" />
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
         </div>
         <p className="text-body text-gray-600">Search the web and discover new companies using AI-powered research</p>
