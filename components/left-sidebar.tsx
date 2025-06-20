@@ -61,14 +61,19 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Region" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
-                  <SelectItem value="north america">North America</SelectItem>
-                  <SelectItem value="europe">Europe</SelectItem>
-                  <SelectItem value="asia">Asia</SelectItem>
-                  <SelectItem value="africa">Africa</SelectItem>
-                  <SelectItem value="south america">South America</SelectItem>
-                  <SelectItem value="oceania">Oceania</SelectItem>
-                  <SelectItem value="middle east">Middle East</SelectItem>
+                <SelectContent className="bg-white border-gray-200">
+                  <div className="max-h-[200px] overflow-y-scroll">
+                    <SelectItem value="north america">North America</SelectItem>
+                    <SelectItem value="europe">Europe</SelectItem>
+                    <SelectItem value="asia">Asia</SelectItem>
+                    <SelectItem value="africa">Africa</SelectItem>
+                    <SelectItem value="south america">South America</SelectItem>
+                    <SelectItem value="oceania">Oceania</SelectItem>
+                    <SelectItem value="middle east">Middle East</SelectItem>
+                    <SelectItem value="central america">Central America</SelectItem>
+                    <SelectItem value="caribbean">Caribbean</SelectItem>
+                    <SelectItem value="eastern europe">Eastern Europe</SelectItem>
+                  </div>
                 </SelectContent>
               </Select>
 
@@ -76,19 +81,24 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Industry" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
-                  <SelectItem value="technology">Technology</SelectItem>
-                  <SelectItem value="energy">Energy</SelectItem>
-                  <SelectItem value="healthcare">Healthcare</SelectItem>
-                  <SelectItem value="transportation">Transportation</SelectItem>
-                  <SelectItem value="food & beverage">Food & Beverage</SelectItem>
-                  <SelectItem value="finance">Finance</SelectItem>
-                  <SelectItem value="retail">Retail</SelectItem>
-                  <SelectItem value="manufacturing">Manufacturing</SelectItem>
-                  <SelectItem value="telecommunications">Telecommunications</SelectItem>
-                  <SelectItem value="entertainment">Entertainment</SelectItem>
-                  <SelectItem value="real estate">Real Estate</SelectItem>
-                  <SelectItem value="education">Education</SelectItem>
+                <SelectContent className="bg-white border-gray-200">
+                  <div className="max-h-[200px] overflow-y-scroll">
+                    <SelectItem value="technology">Technology</SelectItem>
+                    <SelectItem value="energy">Energy</SelectItem>
+                    <SelectItem value="healthcare">Healthcare</SelectItem>
+                    <SelectItem value="transportation">Transportation</SelectItem>
+                    <SelectItem value="food & beverage">Food & Beverage</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                    <SelectItem value="retail">Retail</SelectItem>
+                    <SelectItem value="manufacturing">Manufacturing</SelectItem>
+                    <SelectItem value="telecommunications">Telecommunications</SelectItem>
+                    <SelectItem value="entertainment">Entertainment</SelectItem>
+                    <SelectItem value="real estate">Real Estate</SelectItem>
+                    <SelectItem value="education">Education</SelectItem>
+                    <SelectItem value="automotive">Automotive</SelectItem>
+                    <SelectItem value="aerospace">Aerospace</SelectItem>
+                    <SelectItem value="agriculture">Agriculture</SelectItem>
+                  </div>
                 </SelectContent>
               </Select>
 
@@ -96,17 +106,21 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Sponsorship Type" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
-                  <SelectItem value="sports events">Sports Events</SelectItem>
-                  <SelectItem value="conferences">Conferences</SelectItem>
-                  <SelectItem value="educational">Educational Programs</SelectItem>
-                  <SelectItem value="community">Community Projects</SelectItem>
-                  <SelectItem value="arts & culture">Arts & Culture</SelectItem>
-                  <SelectItem value="environmental">Environmental Initiatives</SelectItem>
-                  <SelectItem value="charity">Charity Events</SelectItem>
-                  <SelectItem value="music festivals">Music Festivals</SelectItem>
-                  <SelectItem value="trade shows">Trade Shows</SelectItem>
-                  <SelectItem value="awards ceremonies">Awards Ceremonies</SelectItem>
+                <SelectContent className="bg-white border-gray-200">
+                  <div className="max-h-[200px] overflow-y-scroll">
+                    <SelectItem value="sports events">Sports Events</SelectItem>
+                    <SelectItem value="conferences">Conferences</SelectItem>
+                    <SelectItem value="educational">Educational Programs</SelectItem>
+                    <SelectItem value="community">Community Projects</SelectItem>
+                    <SelectItem value="arts & culture">Arts & Culture</SelectItem>
+                    <SelectItem value="environmental">Environmental Initiatives</SelectItem>
+                    <SelectItem value="charity">Charity Events</SelectItem>
+                    <SelectItem value="music festivals">Music Festivals</SelectItem>
+                    <SelectItem value="trade shows">Trade Shows</SelectItem>
+                    <SelectItem value="awards ceremonies">Awards Ceremonies</SelectItem>
+                    <SelectItem value="product launches">Product Launches</SelectItem>
+                    <SelectItem value="corporate events">Corporate Events</SelectItem>
+                  </div>
                 </SelectContent>
               </Select>
 
@@ -114,12 +128,16 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Size" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
-                  <SelectItem value="startup">Startup (1-50 employees)</SelectItem>
-                  <SelectItem value="small">Small (51-500 employees)</SelectItem>
-                  <SelectItem value="medium">Medium (501-2000 employees)</SelectItem>
-                  <SelectItem value="large">Large (2001-10000 employees)</SelectItem>
-                  <SelectItem value="enterprise">Enterprise (10000+ employees)</SelectItem>
+                <SelectContent className="bg-white border-gray-200">
+                  <div className="max-h-[200px] overflow-y-scroll">
+                    <SelectItem value="startup">Startup (1-50 employees)</SelectItem>
+                    <SelectItem value="small">Small (51-500 employees)</SelectItem>
+                    <SelectItem value="medium">Medium (501-2000 employees)</SelectItem>
+                    <SelectItem value="large">Large (2001-10000 employees)</SelectItem>
+                    <SelectItem value="enterprise">Enterprise (10000+ employees)</SelectItem>
+                    <SelectItem value="micro">Micro (1-10 employees)</SelectItem>
+                    <SelectItem value="sme">SME (11-250 employees)</SelectItem>
+                  </div>
                 </SelectContent>
               </Select>
 
@@ -127,15 +145,19 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Revenue" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
-                  <SelectItem value="under 10m">Under $10M</SelectItem>
-                  <SelectItem value="10m-50m">$10M - $50M</SelectItem>
-                  <SelectItem value="50m-100m">$50M - $100M</SelectItem>
-                  <SelectItem value="100m-500m">$100M - $500M</SelectItem>
-                  <SelectItem value="500m-1b">$500M - $1B</SelectItem>
-                  <SelectItem value="1b-5b">$1B - $5B</SelectItem>
-                  <SelectItem value="5b-10b">$5B - $10B</SelectItem>
-                  <SelectItem value="over 10b">Over $10B</SelectItem>
+                <SelectContent className="bg-white border-gray-200">
+                  <div className="max-h-[200px] overflow-y-scroll">
+                    <SelectItem value="under 10m">Under $10M</SelectItem>
+                    <SelectItem value="10m-50m">$10M - $50M</SelectItem>
+                    <SelectItem value="50m-100m">$50M - $100M</SelectItem>
+                    <SelectItem value="100m-500m">$100M - $500M</SelectItem>
+                    <SelectItem value="500m-1b">$500M - $1B</SelectItem>
+                    <SelectItem value="1b-5b">$1B - $5B</SelectItem>
+                    <SelectItem value="5b-10b">$5B - $10B</SelectItem>
+                    <SelectItem value="over 10b">Over $10B</SelectItem>
+                    <SelectItem value="under 1m">Under $1M</SelectItem>
+                    <SelectItem value="1m-10m">$1M - $10M</SelectItem>
+                  </div>
                 </SelectContent>
               </Select>
 
