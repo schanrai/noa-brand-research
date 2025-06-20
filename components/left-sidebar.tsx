@@ -83,25 +83,25 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 </SelectTrigger>
                 <SelectContent className="bg-white border-gray-200">
                   <div className="max-h-[200px] overflow-y-scroll">
-                    <SelectItem value="retail">Retail</SelectItem>
-                    <SelectItem value="construction">Construction</SelectItem>
-                    <SelectItem value="manufacturing">Manufacturing</SelectItem>
                     <SelectItem value="agriculture">Agriculture, Forestry, Fishing, and Hunting</SelectItem>
-                    <SelectItem value="mining">Mining, Oil, and Gas Extraction</SelectItem>
-                    <SelectItem value="utilities">Utilities & Energy</SelectItem>
-                    <SelectItem value="transportation">Transportation, Logistics, and Warehousing</SelectItem>
-                    <SelectItem value="technology">Technology, Information, and Media</SelectItem>
-                    <SelectItem value="financial">Financial Services</SelectItem>
-                    <SelectItem value="real estate">Real Estate and Rental Services</SelectItem>
-                    <SelectItem value="professional">Professional Services</SelectItem>
-                    <SelectItem value="government">Government and Public Administration</SelectItem>
-                    <SelectItem value="education">Education</SelectItem>
-                    <SelectItem value="healthcare">Healthcare and Social Assistance</SelectItem>
                     <SelectItem value="arts">Arts, Entertainment, and Recreation</SelectItem>
-                    <SelectItem value="hospitality">Hospitality and Food Services</SelectItem>
+                    <SelectItem value="construction">Construction</SelectItem>
                     <SelectItem value="consumer">Consumer Services</SelectItem>
-                    <SelectItem value="waste">Waste Management and Remediation Services</SelectItem>
+                    <SelectItem value="education">Education</SelectItem>
+                    <SelectItem value="financial">Financial Services</SelectItem>
+                    <SelectItem value="government">Government and Public Administration</SelectItem>
+                    <SelectItem value="healthcare">Healthcare and Social Assistance</SelectItem>
+                    <SelectItem value="hospitality">Hospitality and Food Services</SelectItem>
+                    <SelectItem value="manufacturing">Manufacturing</SelectItem>
+                    <SelectItem value="mining">Mining, Oil, and Gas Extraction</SelectItem>
                     <SelectItem value="other">Other Professional and Administrative Support</SelectItem>
+                    <SelectItem value="professional">Professional Services</SelectItem>
+                    <SelectItem value="real estate">Real Estate and Rental Services</SelectItem>
+                    <SelectItem value="retail">Retail</SelectItem>
+                    <SelectItem value="technology">Technology, Information, and Media</SelectItem>
+                    <SelectItem value="transportation">Transportation, Logistics, and Warehousing</SelectItem>
+                    <SelectItem value="utilities">Utilities & Energy</SelectItem>
+                    <SelectItem value="waste">Waste Management and Remediation Services</SelectItem>
                   </div>
                 </SelectContent>
               </Select>
