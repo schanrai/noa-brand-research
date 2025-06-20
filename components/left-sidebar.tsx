@@ -65,14 +65,11 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                   <div className="max-h-[200px] overflow-y-scroll">
                     <SelectItem value="north america">North America</SelectItem>
                     <SelectItem value="europe">Europe</SelectItem>
-                    <SelectItem value="asia">Asia</SelectItem>
-                    <SelectItem value="africa">Africa</SelectItem>
-                    <SelectItem value="south america">South America</SelectItem>
-                    <SelectItem value="oceania">Oceania</SelectItem>
                     <SelectItem value="middle east">Middle East</SelectItem>
-                    <SelectItem value="central america">Central America</SelectItem>
-                    <SelectItem value="caribbean">Caribbean</SelectItem>
-                    <SelectItem value="eastern europe">Eastern Europe</SelectItem>
+                    <SelectItem value="africa">Africa</SelectItem>
+                    <SelectItem value="asia pacific">Asia Pacific</SelectItem>
+                    <SelectItem value="latin america">Latin America</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
                   </div>
                 </SelectContent>
               </Select>
