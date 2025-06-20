@@ -130,13 +130,14 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 </SelectTrigger>
                 <SelectContent className="bg-white border-gray-200">
                   <div className="max-h-[200px] overflow-y-scroll">
-                    <SelectItem value="startup">Startup (1-50 employees)</SelectItem>
-                    <SelectItem value="small">Small (51-500 employees)</SelectItem>
-                    <SelectItem value="medium">Medium (501-2000 employees)</SelectItem>
-                    <SelectItem value="large">Large (2001-10000 employees)</SelectItem>
-                    <SelectItem value="enterprise">Enterprise (10000+ employees)</SelectItem>
-                    <SelectItem value="micro">Micro (1-10 employees)</SelectItem>
-                    <SelectItem value="sme">SME (11-250 employees)</SelectItem>
+                    <SelectItem value="1-10">1-10 employees</SelectItem>
+                    <SelectItem value="11-50">11-50 employees</SelectItem>
+                    <SelectItem value="51-200">51-200 employees</SelectItem>
+                    <SelectItem value="201-500">201-500 employees</SelectItem>
+                    <SelectItem value="501-1000">501-1000 employees</SelectItem>
+                    <SelectItem value="1001-5000">1001-5000 employees</SelectItem>
+                    <SelectItem value="5001-10000">5001-10,000 employees</SelectItem>
+                    <SelectItem value="10001+">10,001+ employees</SelectItem>
                   </div>
                 </SelectContent>
               </Select>
