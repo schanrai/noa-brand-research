@@ -52,85 +52,110 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
           </div>
         </div>
 
-        <div className="space-y-24">
+        <div className="space-y-24 flex-1 overflow-hidden">
           <h2 className="text-sm font-bold uppercase tracking-wide">Filters</h2>
 
-          <div className="space-y-2">
-            <Select value={region} onValueChange={setRegion}>
-              <SelectTrigger className="bg-white border-gray-200">
-                <SelectValue placeholder="Region" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
-                <ScrollArea className="h-full">
-                  <SelectItem value="north america">North America</SelectItem>
-                  <SelectItem value="europe">Europe</SelectItem>
-                  <SelectItem value="asia">Asia</SelectItem>
-                  <SelectItem value="africa">Africa</SelectItem>
-                </ScrollArea>
-              </SelectContent>
-            </Select>
+          <ScrollArea className="h-[400px]">
+            <div className="space-y-2 pr-4">
+              <Select value={region} onValueChange={setRegion}>
+                <SelectTrigger className="bg-white border-gray-200">
+                  <SelectValue placeholder="Region" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                  <ScrollArea className="h-full">
+                    <SelectItem value="north america">North America</SelectItem>
+                    <SelectItem value="europe">Europe</SelectItem>
+                    <SelectItem value="asia">Asia</SelectItem>
+                    <SelectItem value="africa">Africa</SelectItem>
+                    <SelectItem value="south america">South America</SelectItem>
+                    <SelectItem value="oceania">Oceania</SelectItem>
+                    <SelectItem value="middle east">Middle East</SelectItem>
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
 
-            <Select value={industry} onValueChange={setIndustry}>
-              <SelectTrigger className="bg-white border-gray-200">
-                <SelectValue placeholder="Industry" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
-                <ScrollArea className="h-full">
-                  <SelectItem value="technology">Technology</SelectItem>
-                  <SelectItem value="energy">Energy</SelectItem>
-                  <SelectItem value="healthcare">Healthcare</SelectItem>
-                  <SelectItem value="transportation">Transportation</SelectItem>
-                  <SelectItem value="food & beverage">Food & Beverage</SelectItem>
-                </ScrollArea>
-              </SelectContent>
-            </Select>
+              <Select value={industry} onValueChange={setIndustry}>
+                <SelectTrigger className="bg-white border-gray-200">
+                  <SelectValue placeholder="Industry" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                  <ScrollArea className="h-full">
+                    <SelectItem value="technology">Technology</SelectItem>
+                    <SelectItem value="energy">Energy</SelectItem>
+                    <SelectItem value="healthcare">Healthcare</SelectItem>
+                    <SelectItem value="transportation">Transportation</SelectItem>
+                    <SelectItem value="food & beverage">Food & Beverage</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                    <SelectItem value="retail">Retail</SelectItem>
+                    <SelectItem value="manufacturing">Manufacturing</SelectItem>
+                    <SelectItem value="telecommunications">Telecommunications</SelectItem>
+                    <SelectItem value="entertainment">Entertainment</SelectItem>
+                    <SelectItem value="real estate">Real Estate</SelectItem>
+                    <SelectItem value="education">Education</SelectItem>
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
 
-            <Select value={sponsorshipType} onValueChange={setSponsorshipType}>
-              <SelectTrigger className="bg-white border-gray-200">
-                <SelectValue placeholder="Sponsorship Type" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
-                <ScrollArea className="h-full">
-                  <SelectItem value="sports events">Sports Events</SelectItem>
-                  <SelectItem value="conferences">Conferences</SelectItem>
-                  <SelectItem value="educational">Educational Programs</SelectItem>
-                  <SelectItem value="community">Community Projects</SelectItem>
-                </ScrollArea>
-              </SelectContent>
-            </Select>
+              <Select value={sponsorshipType} onValueChange={setSponsorshipType}>
+                <SelectTrigger className="bg-white border-gray-200">
+                  <SelectValue placeholder="Sponsorship Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                  <ScrollArea className="h-full">
+                    <SelectItem value="sports events">Sports Events</SelectItem>
+                    <SelectItem value="conferences">Conferences</SelectItem>
+                    <SelectItem value="educational">Educational Programs</SelectItem>
+                    <SelectItem value="community">Community Projects</SelectItem>
+                    <SelectItem value="arts & culture">Arts & Culture</SelectItem>
+                    <SelectItem value="environmental">Environmental Initiatives</SelectItem>
+                    <SelectItem value="charity">Charity Events</SelectItem>
+                    <SelectItem value="music festivals">Music Festivals</SelectItem>
+                    <SelectItem value="trade shows">Trade Shows</SelectItem>
+                    <SelectItem value="awards ceremonies">Awards Ceremonies</SelectItem>
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
 
-            <Select value={size} onValueChange={setSize}>
-              <SelectTrigger className="bg-white border-gray-200">
-                <SelectValue placeholder="Size" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
-                <ScrollArea className="h-full">
-                  <SelectItem value="small">Small (&lt;500 employees)</SelectItem>
-                  <SelectItem value="medium">Medium (500-2000 employees)</SelectItem>
-                  <SelectItem value="large">Large (2000+ employees)</SelectItem>
-                </ScrollArea>
-              </SelectContent>
-            </Select>
+              <Select value={size} onValueChange={setSize}>
+                <SelectTrigger className="bg-white border-gray-200">
+                  <SelectValue placeholder="Size" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                  <ScrollArea className="h-full">
+                    <SelectItem value="startup">Startup (1-50 employees)</SelectItem>
+                    <SelectItem value="small">Small (51-500 employees)</SelectItem>
+                    <SelectItem value="medium">Medium (501-2000 employees)</SelectItem>
+                    <SelectItem value="large">Large (2001-10000 employees)</SelectItem>
+                    <SelectItem value="enterprise">Enterprise (10000+ employees)</SelectItem>
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
 
-            <Select value={revenue} onValueChange={setRevenue}>
-              <SelectTrigger className="bg-white border-gray-200">
-                <SelectValue placeholder="Revenue" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
-                <ScrollArea className="h-full">
-                  <SelectItem value="under 1b">Under $1B</SelectItem>
-                  <SelectItem value="1b-5b">$1B - $5B</SelectItem>
-                  <SelectItem value="over 5b">Over $5B</SelectItem>
-                </ScrollArea>
-              </SelectContent>
-            </Select>
+              <Select value={revenue} onValueChange={setRevenue}>
+                <SelectTrigger className="bg-white border-gray-200">
+                  <SelectValue placeholder="Revenue" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                  <ScrollArea className="h-full">
+                    <SelectItem value="under 10m">Under $10M</SelectItem>
+                    <SelectItem value="10m-50m">$10M - $50M</SelectItem>
+                    <SelectItem value="50m-100m">$50M - $100M</SelectItem>
+                    <SelectItem value="100m-500m">$100M - $500M</SelectItem>
+                    <SelectItem value="500m-1b">$500M - $1B</SelectItem>
+                    <SelectItem value="1b-5b">$1B - $5B</SelectItem>
+                    <SelectItem value="5b-10b">$5B - $10B</SelectItem>
+                    <SelectItem value="over 10b">Over $10B</SelectItem>
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
 
-            <div className="flex justify-end mt-4">
-              <Button className="w-1/2 btn-premium bg-black text-white hover:bg-gray-800" onClick={handleSearch}>
-                Search
-              </Button>
+              <div className="flex justify-end mt-4">
+                <Button className="w-1/2 btn-premium bg-black text-white hover:bg-gray-800" onClick={handleSearch}>
+                  Search
+                </Button>
+              </div>
             </div>
-          </div>
+          </ScrollArea>
         </div>
       </div>
     </div>
