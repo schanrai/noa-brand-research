@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Search, Database } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface LeftSidebarProps {
   onSearch: (filters: any) => void
@@ -59,11 +60,13 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
               <SelectTrigger className="bg-white border-gray-200">
                 <SelectValue placeholder="Region" />
               </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200">
-                <SelectItem value="north america">North America</SelectItem>
-                <SelectItem value="europe">Europe</SelectItem>
-                <SelectItem value="asia">Asia</SelectItem>
-                <SelectItem value="africa">Africa</SelectItem>
+              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                <ScrollArea className="h-full">
+                  <SelectItem value="north america">North America</SelectItem>
+                  <SelectItem value="europe">Europe</SelectItem>
+                  <SelectItem value="asia">Asia</SelectItem>
+                  <SelectItem value="africa">Africa</SelectItem>
+                </ScrollArea>
               </SelectContent>
             </Select>
 
@@ -71,12 +74,14 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
               <SelectTrigger className="bg-white border-gray-200">
                 <SelectValue placeholder="Industry" />
               </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200">
-                <SelectItem value="technology">Technology</SelectItem>
-                <SelectItem value="energy">Energy</SelectItem>
-                <SelectItem value="healthcare">Healthcare</SelectItem>
-                <SelectItem value="transportation">Transportation</SelectItem>
-                <SelectItem value="food & beverage">Food & Beverage</SelectItem>
+              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                <ScrollArea className="h-full">
+                  <SelectItem value="technology">Technology</SelectItem>
+                  <SelectItem value="energy">Energy</SelectItem>
+                  <SelectItem value="healthcare">Healthcare</SelectItem>
+                  <SelectItem value="transportation">Transportation</SelectItem>
+                  <SelectItem value="food & beverage">Food & Beverage</SelectItem>
+                </ScrollArea>
               </SelectContent>
             </Select>
 
@@ -84,11 +89,13 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
               <SelectTrigger className="bg-white border-gray-200">
                 <SelectValue placeholder="Sponsorship Type" />
               </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200">
-                <SelectItem value="sports events">Sports Events</SelectItem>
-                <SelectItem value="conferences">Conferences</SelectItem>
-                <SelectItem value="educational">Educational Programs</SelectItem>
-                <SelectItem value="community">Community Projects</SelectItem>
+              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                <ScrollArea className="h-full">
+                  <SelectItem value="sports events">Sports Events</SelectItem>
+                  <SelectItem value="conferences">Conferences</SelectItem>
+                  <SelectItem value="educational">Educational Programs</SelectItem>
+                  <SelectItem value="community">Community Projects</SelectItem>
+                </ScrollArea>
               </SelectContent>
             </Select>
 
@@ -96,10 +103,12 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
               <SelectTrigger className="bg-white border-gray-200">
                 <SelectValue placeholder="Size" />
               </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200">
-                <SelectItem value="small">Small (&lt;500 employees)</SelectItem>
-                <SelectItem value="medium">Medium (500-2000 employees)</SelectItem>
-                <SelectItem value="large">Large (2000+ employees)</SelectItem>
+              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                <ScrollArea className="h-full">
+                  <SelectItem value="small">Small (&lt;500 employees)</SelectItem>
+                  <SelectItem value="medium">Medium (500-2000 employees)</SelectItem>
+                  <SelectItem value="large">Large (2000+ employees)</SelectItem>
+                </ScrollArea>
               </SelectContent>
             </Select>
 
@@ -107,10 +116,12 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
               <SelectTrigger className="bg-white border-gray-200">
                 <SelectValue placeholder="Revenue" />
               </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200">
-                <SelectItem value="under 1b">Under $1B</SelectItem>
-                <SelectItem value="1b-5b">$1B - $5B</SelectItem>
-                <SelectItem value="over 5b">Over $5B</SelectItem>
+              <SelectContent className="bg-white border-gray-200 max-h-[200px]">
+                <ScrollArea className="h-full">
+                  <SelectItem value="under 1b">Under $1B</SelectItem>
+                  <SelectItem value="1b-5b">$1B - $5B</SelectItem>
+                  <SelectItem value="over 5b">Over $5B</SelectItem>
+                </ScrollArea>
               </SelectContent>
             </Select>
 
