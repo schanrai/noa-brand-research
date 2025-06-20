@@ -108,18 +108,8 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 </SelectTrigger>
                 <SelectContent className="bg-white border-gray-200">
                   <div className="max-h-[200px] overflow-y-scroll">
-                    <SelectItem value="sports events">Sports Events</SelectItem>
-                    <SelectItem value="conferences">Conferences</SelectItem>
-                    <SelectItem value="educational">Educational Programs</SelectItem>
-                    <SelectItem value="community">Community Projects</SelectItem>
-                    <SelectItem value="arts & culture">Arts & Culture</SelectItem>
-                    <SelectItem value="environmental">Environmental Initiatives</SelectItem>
-                    <SelectItem value="charity">Charity Events</SelectItem>
-                    <SelectItem value="music festivals">Music Festivals</SelectItem>
-                    <SelectItem value="trade shows">Trade Shows</SelectItem>
-                    <SelectItem value="awards ceremonies">Awards Ceremonies</SelectItem>
-                    <SelectItem value="product launches">Product Launches</SelectItem>
-                    <SelectItem value="corporate events">Corporate Events</SelectItem>
+                    <SelectItem value="sports event">Sports Event</SelectItem>
+                    <SelectItem value="music artist">Music Artist</SelectItem>
                   </div>
                 </SelectContent>
               </Select>
