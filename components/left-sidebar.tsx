@@ -61,7 +61,7 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Region" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto">
+                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                   <SelectItem value="north america">North America</SelectItem>
                   <SelectItem value="europe">Europe</SelectItem>
                   <SelectItem value="asia">Asia</SelectItem>
@@ -76,7 +76,7 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Industry" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto">
+                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                   <SelectItem value="technology">Technology</SelectItem>
                   <SelectItem value="energy">Energy</SelectItem>
                   <SelectItem value="healthcare">Healthcare</SelectItem>
@@ -96,7 +96,7 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Sponsorship Type" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto">
+                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                   <SelectItem value="sports events">Sports Events</SelectItem>
                   <SelectItem value="conferences">Conferences</SelectItem>
                   <SelectItem value="educational">Educational Programs</SelectItem>
@@ -114,7 +114,7 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Size" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto">
+                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                   <SelectItem value="startup">Startup (1-50 employees)</SelectItem>
                   <SelectItem value="small">Small (51-500 employees)</SelectItem>
                   <SelectItem value="medium">Medium (501-2000 employees)</SelectItem>
@@ -127,7 +127,7 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Revenue" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto">
+                <SelectContent className="bg-white border-gray-200 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                   <SelectItem value="under 10m">Under $10M</SelectItem>
                   <SelectItem value="10m-50m">$10M - $50M</SelectItem>
                   <SelectItem value="50m-100m">$50M - $100M</SelectItem>
