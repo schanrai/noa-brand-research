@@ -109,7 +109,13 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 <SelectContent className="bg-white border-gray-200">
                   <div className="max-h-[200px] overflow-y-scroll">
                     <SelectItem value="sports event">Sports Event</SelectItem>
+                    <SelectItem value="sports team/player">Sports Team/Player</SelectItem>
+                    <SelectItem value="music event">Music Event</SelectItem>
                     <SelectItem value="music artist">Music Artist</SelectItem>
+                    <SelectItem value="arts & culture">Arts & Culture</SelectItem>
+                    <SelectItem value="non-profit">Non-Profit</SelectItem>
+                    <SelectItem value="environmental">Environmental</SelectItem>
+                    <SelectItem value="conference">Conference</SelectItem>
                   </div>
                 </SelectContent>
               </Select>
