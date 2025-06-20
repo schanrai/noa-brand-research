@@ -114,9 +114,11 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
               </SelectContent>
             </Select>
 
-            <Button className="w-1/2 btn-premium bg-black text-white hover:bg-gray-800 mt-4" onClick={handleSearch}>
-              Search
-            </Button>
+            <div className="flex justify-end mt-4">
+              <Button className="w-1/2 btn-premium bg-black text-white hover:bg-gray-800" onClick={handleSearch}>
+                Search
+              </Button>
+            </div>
           </div>
         </div>
       </div>
