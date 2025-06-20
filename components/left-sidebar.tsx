@@ -148,14 +148,14 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 </SelectTrigger>
                 <SelectContent className="bg-white border-gray-200">
                   <div className="max-h-[200px] overflow-y-scroll">
-                    <SelectItem value="less-than-500k">Less than $500K</SelectItem>
-                    <SelectItem value="500k-5m">$500K – $5M</SelectItem>
-                    <SelectItem value="5m-25m">$5M – $25M</SelectItem>
-                    <SelectItem value="25m-100m">$25M – $100M</SelectItem>
-                    <SelectItem value="100m-500m">$100M – $500M</SelectItem>
-                    <SelectItem value="500m-1b">Large enterprise: $500M – $1B</SelectItem>
-                    <SelectItem value="1b-5b">Very large enterprise: $1B – $5B</SelectItem>
-                    <SelectItem value="5b+">Global/multinational enterprise: $5B+</SelectItem>
+                    <SelectItem value="less-than-499k">{"< $499K"}</SelectItem>
+                    <SelectItem value="500k-4.9m">$500K – $4.9M</SelectItem>
+                    <SelectItem value="5m-24.9m">$5M – $24.9M</SelectItem>
+                    <SelectItem value="25m-99.9m">$25M – $99.9M</SelectItem>
+                    <SelectItem value="100m-499.9m">$100M – $499.9M</SelectItem>
+                    <SelectItem value="500m-999.9b">$500M – $999.9B</SelectItem>
+                    <SelectItem value="1b-4.99b">$1B – $4.99B</SelectItem>
+                    <SelectItem value="5b+">$5B+</SelectItem>
                   </div>
                 </SelectContent>
               </Select>
