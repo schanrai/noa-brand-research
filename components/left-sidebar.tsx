@@ -148,16 +148,14 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 </SelectTrigger>
                 <SelectContent className="bg-white border-gray-200">
                   <div className="max-h-[200px] overflow-y-scroll">
-                    <SelectItem value="under 10m">Under $10M</SelectItem>
-                    <SelectItem value="10m-50m">$10M - $50M</SelectItem>
-                    <SelectItem value="50m-100m">$50M - $100M</SelectItem>
-                    <SelectItem value="100m-500m">$100M - $500M</SelectItem>
-                    <SelectItem value="500m-1b">$500M - $1B</SelectItem>
-                    <SelectItem value="1b-5b">$1B - $5B</SelectItem>
-                    <SelectItem value="5b-10b">$5B - $10B</SelectItem>
-                    <SelectItem value="over 10b">Over $10B</SelectItem>
-                    <SelectItem value="under 1m">Under $1M</SelectItem>
-                    <SelectItem value="1m-10m">$1M - $10M</SelectItem>
+                    <SelectItem value="less-than-500k">Less than $500K</SelectItem>
+                    <SelectItem value="500k-5m">$500K – $5M</SelectItem>
+                    <SelectItem value="5m-25m">$5M – $25M</SelectItem>
+                    <SelectItem value="25m-100m">$25M – $100M</SelectItem>
+                    <SelectItem value="100m-500m">$100M – $500M</SelectItem>
+                    <SelectItem value="500m-1b">Large enterprise: $500M – $1B</SelectItem>
+                    <SelectItem value="1b-5b">Very large enterprise: $1B – $5B</SelectItem>
+                    <SelectItem value="5b+">Global/multinational enterprise: $5B+</SelectItem>
                   </div>
                 </SelectContent>
               </Select>
