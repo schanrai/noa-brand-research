@@ -181,7 +181,7 @@ export default function CoPilotInterface({
       </div>
 
       <div
-        className={`flex h-full flex-col p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
+        className={`flex flex-col p-6 max-h-96 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
       >
         {/* Feedback Mode Indicator */}
         {feedbackMode && (
@@ -200,7 +200,7 @@ export default function CoPilotInterface({
 
         {/* Rest of the content remains the same */}
         {isProcessing ? (
-          <div className="flex-1 flex flex-col items-center justify-center">
+          <div className="flex-1 flex flex-col items-center justify-center min-h-0">
             <div className="text-center space-y-24 max-w-2xl">
               <div className="flex items-center justify-center">
                 <Loader2 className="h-12 w-12 animate-spin text-black" />
@@ -219,7 +219,7 @@ export default function CoPilotInterface({
         ) : (
           <>
             {/* Conversation Thread */}
-            <div className="flex-1 space-y-6 mb-6">
+            <div className="flex-1 space-y-6 mb-6 overflow-y-auto">
               {conversationHistory.map((message, index) => (
                 <div
                   key={index}
