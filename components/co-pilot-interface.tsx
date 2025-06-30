@@ -173,14 +173,16 @@ export default function CoPilotInterface({
           <Network className="h-5 w-5 text-gray-600" />
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
         </div>
-        <p className="text-body text-gray-600">
-          Search the web and research your company using our AI-powered co-pilot
-        </p>
+        {!feedbackMode && (
+          <p className="text-body text-gray-600">
+            Search the web and research your company using our AI-powered co-pilot
+          </p>
+        )}
       </div>
 
-      {/* Feedback Mode Indicator */}
+      {/* Feedback Mode Indicator - moved to top and repositioned */}
       {feedbackMode && (
-        <div className="mb-24 mx-24 p-16 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
+        <div className="mb-24 ml-24 mr-24 p-16 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg -mt-24">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
