@@ -166,10 +166,10 @@ export default function CoPilotInterface({
   }
 
   return (
-    <div className={`flex h-full flex-col ${feedbackMode ? "border-2 border-orange-200 rounded-lg" : ""}`}>
+    <div className={`flex flex-col gap-y-0 my-0 h-full px-0 py-0 ${feedbackMode ? "border-2 border-orange-200 rounded-lg" : ""}`}>
       {/* Header */}
       <div className="mb-48 ml-24 -mt-24">
-        <div className="flex items-center gap-3 mb-16">
+        <div className="flex flex-row items-start justify-start gap-x-0 py-0 pb-0 mb-0">
           <Network className="h-5 w-5 text-gray-600" />
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
         </div>
@@ -182,7 +182,7 @@ export default function CoPilotInterface({
 
       {/* Feedback Mode Indicator - moved to top and repositioned */}
       {feedbackMode && (
-        <div className="mb-24 ml-24 mr-24 p-16 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg -mt-24">
+        <div className="p-16 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg -mt-24 mx-1 mb-5">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
@@ -219,7 +219,7 @@ export default function CoPilotInterface({
             {conversationHistory.map((message, index) => (
               <div
                 key={index}
-                className={`flex items-start gap-16 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex items-start gap-16 mx-2.5 ${message.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {message.role === "assistant" && (
                   <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
@@ -239,8 +239,8 @@ export default function CoPilotInterface({
               </div>
             ))}
             {/* Input Area - moved inside conversation thread */}
-            <div className="pt-24">
-              <form onSubmit={handleSubmit} className="flex gap-16">
+            <div className="pt-60">
+              <form onSubmit={handleSubmit} className="flex gap-16 mx-2.5">
                 <textarea
                   placeholder={
                     currentStage === "feedback" || currentStage === "feedback-clarification"
