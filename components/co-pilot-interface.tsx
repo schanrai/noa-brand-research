@@ -221,8 +221,7 @@ export default function CoPilotInterface({
                 )}
               </div>
             ))}
-
-            {/* Input Area - moved here */}
+            {/* Input Area - moved inside conversation thread */}
             <div className="pt-24">
               <form onSubmit={handleSubmit} className="flex gap-16">
                 <textarea
