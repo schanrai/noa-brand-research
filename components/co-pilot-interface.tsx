@@ -33,6 +33,7 @@ export default function CoPilotInterface({
   const [isProcessing, setIsProcessing] = useState(false)
   const [processingSteps, setProcessingSteps] = useState<string[]>([])
   const [currentStage, setCurrentStage] = useState(feedbackMode ? "feedback" : stage)
+  const [showFullHistory, setShowFullHistory] = useState(false)
 
   // Simulate LLM working in the background
   useEffect(() => {
@@ -181,7 +182,7 @@ export default function CoPilotInterface({
       </div>
 
       <div
-        className={`flex flex-col h-96 p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
+        className={`flex flex-col ${feedbackMode ? "h-64" : "h-96"} p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
       >
         {/* Feedback Mode Indicator */}
         {feedbackMode && (
@@ -219,29 +220,48 @@ export default function CoPilotInterface({
         ) : (
           <>
             {/* Conversation Thread */}
-            <div className="flex-1 space-y-6 overflow-y-auto min-h-0">
-              {conversationHistory.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  {message.role === "assistant" && (
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                      <Lightbulb className="h-4 w-4 text-gray-600" />
-                    </div>
-                  )}
+            <div
+              className={`flex-1 space-y-6 overflow-y-auto min-h-0 ${feedbackMode && !showFullHistory ? "max-h-32" : ""}`}
+            >
+              {(feedbackMode && !showFullHistory ? conversationHistory.slice(-2) : conversationHistory).map(
+                (message, index) => (
+                  <div
+                    key={feedbackMode && !showFullHistory ? `limited-${index}` : index}
+                    className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    {message.role === "assistant" && (
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                        <Lightbulb className="h-4 w-4 text-gray-600" />
+                      </div>
+                    )}
 
-                  <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
-                    <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
+                    <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
+                      <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
+                    </div>
+
+                    {message.role === "user" && (
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                        <Star className="h-4 w-4 text-gray-600" />
+                      </div>
+                    )}
                   </div>
+                ),
+              )}
 
-                  {message.role === "user" && (
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                      <Star className="h-4 w-4 text-gray-600" />
-                    </div>
-                  )}
+              {/* Show conversation history toggle - only in feedback mode */}
+              {feedbackMode && conversationHistory.length > 2 && (
+                <div className="flex justify-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowFullHistory(!showFullHistory)}
+                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                  >
+                    {showFullHistory
+                      ? "Show less"
+                      : `Show conversation history (${conversationHistory.length - 2} more messages)`}
+                  </button>
                 </div>
-              ))}
+              )}
             </div>
 
             {/* Input Area - moved outside conversation thread and positioned at bottom */}
