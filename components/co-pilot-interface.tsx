@@ -171,7 +171,7 @@ export default function CoPilotInterface({
     >
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-3 mb-16">
+        <div className="flex items-center gap-3 mb-4">
           <Network className="h-5 w-5 text-gray-600" />
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
         </div>
