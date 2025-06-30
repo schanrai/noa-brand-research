@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Send, Lightbulb, Star, Loader2, Network } from "lucide-react"
 
@@ -227,7 +226,7 @@ export default function CoPilotInterface({
           {/* Input Area */}
           <div className="border-t border-gray-200 pt-24">
             <form onSubmit={handleSubmit} className="flex gap-16">
-              <Input
+              <textarea
                 placeholder={
                   currentStage === "feedback" || currentStage === "feedback-clarification"
                     ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
@@ -235,7 +234,13 @@ export default function CoPilotInterface({
                 }
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
-                className="flex-1 bg-white border-gray-200"
+                className="flex-1 bg-white border-gray-200 rounded-md px-3 py-2 h-20 resize-none border text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault()
+                    handleSubmit(e)
+                  }
+                }}
               />
               <Button type="submit" size="icon" className="bg-black text-white hover:bg-gray-800">
                 <Send className="h-4 w-4" />
