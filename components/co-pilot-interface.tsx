@@ -181,7 +181,7 @@ export default function CoPilotInterface({
       </div>
 
       <div
-        className={`flex flex-col p-6 max-h-96 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
+        className={`flex flex-col h-96 p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
       >
         {/* Feedback Mode Indicator */}
         {feedbackMode && (
@@ -206,7 +206,7 @@ export default function CoPilotInterface({
                 <Loader2 className="h-12 w-12 animate-spin text-black" />
               </div>
               <h2 className="text-xl font-bold uppercase tracking-wide">Generating Brand Research</h2>
-              <div className="space-y-4 text-left">
+              <div className="space-y-4 text-left overflow-y-auto">
                 {processingSteps.map((step, index) => (
                   <div key={index} className="flex items-center gap-4">
                     <div className="w-4 h-4 rounded-full bg-black"></div>
@@ -219,7 +219,7 @@ export default function CoPilotInterface({
         ) : (
           <>
             {/* Conversation Thread */}
-            <div className="flex-1 space-y-6 mb-6 overflow-y-auto">
+            <div className="flex-1 space-y-6 overflow-y-auto min-h-0">
               {conversationHistory.map((message, index) => (
                 <div
                   key={index}
@@ -242,31 +242,32 @@ export default function CoPilotInterface({
                   )}
                 </div>
               ))}
-              {/* Input Area - moved inside conversation thread */}
-              <div className="pt-6">
-                <form onSubmit={handleSubmit} className="flex gap-4">
-                  <textarea
-                    placeholder={
-                      currentStage === "feedback" || currentStage === "feedback-clarification"
-                        ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
-                        : "Type your response..."
+            </div>
+
+            {/* Input Area - moved outside conversation thread and positioned at bottom */}
+            <div className="pt-6 border-t border-gray-200 bg-white">
+              <form onSubmit={handleSubmit} className="flex gap-4">
+                <textarea
+                  placeholder={
+                    currentStage === "feedback" || currentStage === "feedback-clarification"
+                      ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
+                      : "Type your response..."
+                  }
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  className="flex-1 bg-white border-gray-200 rounded-md px-3 py-2 h-20 resize-none border text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault()
+                      handleSubmit(e)
                     }
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    className="flex-1 bg-white border-gray-200 rounded-md px-3 py-2 h-20 resize-none border text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
-                        e.preventDefault()
-                        handleSubmit(e)
-                      }
-                    }}
-                  />
-                  <Button type="submit" size="icon" className="bg-black text-white hover:bg-gray-800">
-                    <Send className="h-4 w-4" />
-                    <span className="sr-only">Send</span>
-                  </Button>
-                </form>
-              </div>
+                  }}
+                />
+                <Button type="submit" size="icon" className="bg-black text-white hover:bg-gray-800">
+                  <Send className="h-4 w-4" />
+                  <span className="sr-only">Send</span>
+                </Button>
+              </form>
             </div>
           </>
         )}
