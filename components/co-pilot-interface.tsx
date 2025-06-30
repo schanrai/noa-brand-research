@@ -221,32 +221,32 @@ export default function CoPilotInterface({
                 )}
               </div>
             ))}
-          </div>
 
-          {/* Input Area */}
-          <div className="border-t border-gray-200 pt-24">
-            <form onSubmit={handleSubmit} className="flex gap-16">
-              <textarea
-                placeholder={
-                  currentStage === "feedback" || currentStage === "feedback-clarification"
-                    ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
-                    : "Type your response..."
-                }
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                className="flex-1 bg-white border-gray-200 rounded-md px-3 py-2 h-20 resize-none border text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault()
-                    handleSubmit(e)
+            {/* Input Area - moved here */}
+            <div className="pt-24">
+              <form onSubmit={handleSubmit} className="flex gap-16">
+                <textarea
+                  placeholder={
+                    currentStage === "feedback" || currentStage === "feedback-clarification"
+                      ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
+                      : "Type your response..."
                   }
-                }}
-              />
-              <Button type="submit" size="icon" className="bg-black text-white hover:bg-gray-800">
-                <Send className="h-4 w-4" />
-                <span className="sr-only">Send</span>
-              </Button>
-            </form>
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  className="flex-1 bg-white border-gray-200 rounded-md px-3 py-2 h-20 resize-none border text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault()
+                      handleSubmit(e)
+                    }
+                  }}
+                />
+                <Button type="submit" size="icon" className="bg-black text-white hover:bg-gray-800">
+                  <Send className="h-4 w-4" />
+                  <span className="sr-only">Send</span>
+                </Button>
+              </form>
+            </div>
           </div>
         </>
       )}
