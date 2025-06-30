@@ -45,7 +45,7 @@ export default function MainContent({
   }
 
   return (
-    <div className="flex-1 overflow-auto p-48 bg-main">
+    <div className="flex-1 overflow-auto p-48 bg-main pt-[22px] pb-52">
       {(searchStage !== "results" || feedbackMode) && (
         <CoPilotInterface
           stage={feedbackMode ? "feedback" : searchStage}
