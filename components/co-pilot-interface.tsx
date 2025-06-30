@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Send, Lightbulb, Star, Loader2, Network } from "lucide-react"
 
 interface CoPilotInterfaceProps {
-  stage: "initial" | "region" | "division" | "results" | "feedback"
+  stage: "initial" | "region" | "division" | "results" | "feedback" | "feedback-clarification"
   onResponse: (stage: string, value: string) => void
   feedbackMode?: boolean
   onFeedbackComplete?: () => void
@@ -43,7 +43,7 @@ export default function CoPilotInterface({
           ? [
               "Processing your feedback...",
               "Updating research parameters...",
-              "Re-analyzing company data...",
+              "Re-analyzing company data with new criteria...",
               "Refining search results...",
               "Generating updated report...",
             ]
@@ -115,17 +115,40 @@ export default function CoPilotInterface({
       nextStage = "processing"
       setCurrentStage("processing")
     } else if (currentStage === "feedback") {
-      assistantResponse =
-        "Thanks for the feedback! Let me update the research with your requirements. This will take a moment..."
+      // Analyze feedback and potentially ask clarifying questions
+      const feedback = userInput.toLowerCase()
+
+      if (feedback.includes("industry") || feedback.includes("sector")) {
+        assistantResponse =
+          "Got it! Which industry would you prefer me to focus on? For example: healthcare, technology, renewable energy, financial services, etc."
+        nextStage = "feedback-clarification"
+        setCurrentStage("feedback-clarification")
+      } else if (feedback.includes("size") || feedback.includes("employee") || feedback.includes("revenue")) {
+        assistantResponse =
+          "Understood! What company size are you looking for? For example: 'startups under 100 employees', 'mid-size companies 500-5000 employees', or 'large enterprises 10,000+ employees'?"
+        nextStage = "feedback-clarification"
+        setCurrentStage("feedback-clarification")
+      } else if (feedback.includes("region") || feedback.includes("location") || feedback.includes("geographic")) {
+        assistantResponse =
+          "I see! Which geographic region should I focus on? For example: North America, Europe, Asia Pacific, or a specific country?"
+        nextStage = "feedback-clarification"
+        setCurrentStage("feedback-clarification")
+      } else if (feedback.includes("different company") || feedback.includes("another company")) {
+        assistantResponse = "No problem! What company would you like me to research instead?"
+        nextStage = "feedback-clarification"
+        setCurrentStage("feedback-clarification")
+      } else {
+        // Generic feedback - ask for more specifics
+        assistantResponse =
+          "Thanks for the feedback! To help me improve the results, could you be more specific? For example, are you looking for a different industry, company size, geographic region, or completely different company?"
+        nextStage = "feedback-clarification"
+        setCurrentStage("feedback-clarification")
+      }
+    } else if (currentStage === "feedback-clarification") {
+      assistantResponse = "Perfect! Let me update the research with your requirements. This will take a moment..."
       setIsProcessing(true)
       nextStage = "processing-feedback"
       setCurrentStage("processing-feedback")
-
-      // After processing, complete the feedback cycle
-      setTimeout(() => {
-        setIsProcessing(false)
-        onFeedbackComplete?.()
-      }, 3000)
     }
 
     const newAssistantMessage = {
@@ -205,7 +228,11 @@ export default function CoPilotInterface({
           <div className="border-t border-gray-200 pt-24">
             <form onSubmit={handleSubmit} className="flex gap-16">
               <Input
-                placeholder="Type your response..."
+                placeholder={
+                  currentStage === "feedback" || currentStage === "feedback-clarification"
+                    ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
+                    : "Type your response..."
+                }
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 className="flex-1 bg-white border-gray-200"
