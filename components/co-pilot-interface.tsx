@@ -166,9 +166,11 @@ export default function CoPilotInterface({
   }
 
   return (
-    <div className={`flex h-full flex-col ${feedbackMode ? "border-2 border-orange-200 rounded-lg" : ""}`}>
+    <div
+      className={`flex h-full flex-col p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
+    >
       {/* Header */}
-      <div className="mb-48 ml-24 -mt-24">
+      <div className="mb-6">
         <div className="flex items-center gap-3 mb-16">
           <Network className="h-5 w-5 text-gray-600" />
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
@@ -182,7 +184,7 @@ export default function CoPilotInterface({
 
       {/* Feedback Mode Indicator */}
       {feedbackMode && (
-        <div className="mb-24 mx-24 p-16 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
+        <div className="mb-6 p-4 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
@@ -202,9 +204,9 @@ export default function CoPilotInterface({
               <Loader2 className="h-12 w-12 animate-spin text-black" />
             </div>
             <h2 className="text-xl font-bold uppercase tracking-wide">Generating Brand Research</h2>
-            <div className="space-y-16 text-left">
+            <div className="space-y-4 text-left">
               {processingSteps.map((step, index) => (
-                <div key={index} className="flex items-center gap-16">
+                <div key={index} className="flex items-center gap-4">
                   <div className="w-4 h-4 rounded-full bg-black"></div>
                   <p className="text-body text-gray-800">{step}</p>
                 </div>
@@ -215,11 +217,11 @@ export default function CoPilotInterface({
       ) : (
         <>
           {/* Conversation Thread */}
-          <div className="flex-1 space-y-24 mb-24">
+          <div className="flex-1 space-y-6 mb-6">
             {conversationHistory.map((message, index) => (
               <div
                 key={index}
-                className={`flex items-start gap-16 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {message.role === "assistant" && (
                   <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
@@ -239,8 +241,8 @@ export default function CoPilotInterface({
               </div>
             ))}
             {/* Input Area - moved inside conversation thread */}
-            <div className="pt-24">
-              <form onSubmit={handleSubmit} className="flex gap-16">
+            <div className="pt-6">
+              <form onSubmit={handleSubmit} className="flex gap-4">
                 <textarea
                   placeholder={
                     currentStage === "feedback" || currentStage === "feedback-clarification"
