@@ -33,7 +33,7 @@ export default function CoPilotInterface({
   const [isProcessing, setIsProcessing] = useState(false)
   const [processingSteps, setProcessingSteps] = useState<string[]>([])
   const [currentStage, setCurrentStage] = useState(feedbackMode ? "feedback" : stage)
-  const [showFullHistory, setShowFullHistory] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   // Simulate LLM working in the background
   useEffect(() => {
@@ -170,9 +170,21 @@ export default function CoPilotInterface({
     <>
       {/* Header - moved outside and repositioned */}
       <div className="mb-6 ml-6">
-        <div className="flex items-center gap-3 mb-4">
-          <Network className="h-5 w-5 text-gray-600" />
-          <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <Network className="h-5 w-5 text-gray-600" />
+            <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
+          </div>
+          {feedbackMode && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="text-gray-600 hover:text-gray-800"
+            >
+              {isCollapsed ? "Expand" : "Minimize"}
+            </Button>
+          )}
         </div>
         {!feedbackMode && (
           <p className="text-body text-gray-600">
@@ -182,10 +194,10 @@ export default function CoPilotInterface({
       </div>
 
       <div
-        className={`flex flex-col ${feedbackMode ? "h-64" : "h-96"} p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
+        className={`flex flex-col ${feedbackMode && isCollapsed ? "h-auto" : "h-full"} p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
       >
         {/* Feedback Mode Indicator */}
-        {feedbackMode && (
+        {feedbackMode && !isCollapsed && (
           <div className="mb-6 p-4 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
             <div className="flex items-center">
               <div className="flex-shrink-0">
@@ -201,13 +213,13 @@ export default function CoPilotInterface({
 
         {/* Rest of the content remains the same */}
         {isProcessing ? (
-          <div className="flex-1 flex flex-col items-center justify-center min-h-0">
+          <div className="flex-1 flex flex-col items-center justify-center">
             <div className="text-center space-y-24 max-w-2xl">
               <div className="flex items-center justify-center">
                 <Loader2 className="h-12 w-12 animate-spin text-black" />
               </div>
               <h2 className="text-xl font-bold uppercase tracking-wide">Generating Brand Research</h2>
-              <div className="space-y-4 text-left overflow-y-auto">
+              <div className="space-y-4 text-left">
                 {processingSteps.map((step, index) => (
                   <div key={index} className="flex items-center gap-4">
                     <div className="w-4 h-4 rounded-full bg-black"></div>
@@ -219,14 +231,12 @@ export default function CoPilotInterface({
           </div>
         ) : (
           <>
-            {/* Conversation Thread */}
-            <div
-              className={`flex-1 space-y-6 overflow-y-auto min-h-0 ${feedbackMode && !showFullHistory ? "max-h-32" : ""}`}
-            >
-              {(feedbackMode && !showFullHistory ? conversationHistory.slice(-2) : conversationHistory).map(
-                (message, index) => (
+            {/* Conversation Thread - only show when not collapsed or not in feedback mode */}
+            {(!feedbackMode || !isCollapsed) && (
+              <div className="flex-1 space-y-6 mb-6">
+                {conversationHistory.map((message, index) => (
                   <div
-                    key={feedbackMode && !showFullHistory ? `limited-${index}` : index}
+                    key={index}
                     className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
                   >
                     {message.role === "assistant" && (
@@ -245,27 +255,28 @@ export default function CoPilotInterface({
                       </div>
                     )}
                   </div>
-                ),
-              )}
+                ))}
+              </div>
+            )}
 
-              {/* Show conversation history toggle - only in feedback mode */}
-              {feedbackMode && conversationHistory.length > 2 && (
-                <div className="flex justify-center pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowFullHistory(!showFullHistory)}
-                    className="text-xs text-gray-500 hover:text-gray-700 underline"
-                  >
-                    {showFullHistory
-                      ? "Show less"
-                      : `Show conversation history (${conversationHistory.length - 2} more messages)`}
-                  </button>
+            {/* Show current message when collapsed in feedback mode */}
+            {feedbackMode && isCollapsed && (
+              <div className="mb-6">
+                <div className="flex items-start gap-4 justify-start">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                    <Lightbulb className="h-4 w-4 text-gray-600" />
+                  </div>
+                  <div className="max-w-[80%] text-left">
+                    <p className="text-body text-gray-800 leading-relaxed">
+                      {conversationHistory[conversationHistory.length - 1]?.content}
+                    </p>
+                  </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
-            {/* Input Area - moved outside conversation thread and positioned at bottom */}
-            <div className="pt-6 border-t border-gray-200">
+            {/* Input Area - always visible */}
+            <div className="pt-6">
               <form onSubmit={handleSubmit} className="flex gap-4">
                 <textarea
                   placeholder={
