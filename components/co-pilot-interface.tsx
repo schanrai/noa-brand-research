@@ -166,7 +166,7 @@ export default function CoPilotInterface({
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className={`flex h-full flex-col ${feedbackMode ? "border-2 border-orange-200 rounded-lg" : ""}`}>
       {/* Header */}
       <div className="mb-48 ml-24 -mt-24">
         <div className="flex items-center gap-3 mb-16">
@@ -177,6 +177,21 @@ export default function CoPilotInterface({
           Search the web and research your company using our AI-powered co-pilot
         </p>
       </div>
+
+      {/* Feedback Mode Indicator */}
+      {feedbackMode && (
+        <div className="mb-24 mx-24 p-16 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-orange-800 uppercase tracking-wide">Feedback Mode Active</p>
+              <p className="text-xs text-orange-600">Provide feedback to refine the research results</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isProcessing ? (
         <div className="flex-1 flex flex-col items-center justify-center">
