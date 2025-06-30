@@ -166,11 +166,9 @@ export default function CoPilotInterface({
   }
 
   return (
-    <div
-      className={`flex h-full flex-col p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
-    >
-      {/* Header */}
-      <div className="mb-6">
+    <>
+      {/* Header - moved outside and repositioned */}
+      <div className="mb-6 ml-6">
         <div className="flex items-center gap-3 mb-4">
           <Network className="h-5 w-5 text-gray-600" />
           <h1 className="text-base font-bold uppercase tracking-wide">AI Research Co-Pilot</h1>
@@ -182,92 +180,97 @@ export default function CoPilotInterface({
         )}
       </div>
 
-      {/* Feedback Mode Indicator */}
-      {feedbackMode && (
-        <div className="mb-6 p-4 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-            </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium text-orange-800 uppercase tracking-wide">Feedback Mode Active</p>
-              <p className="text-xs text-orange-600">Provide feedback to refine the research results</p>
+      <div
+        className={`flex h-full flex-col p-6 ${feedbackMode ? "border-2 border-orange-200 rounded-lg bg-orange-50/10" : ""}`}
+      >
+        {/* Feedback Mode Indicator */}
+        {feedbackMode && (
+          <div className="mb-6 p-4 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-orange-800 uppercase tracking-wide">Feedback Mode Active</p>
+                <p className="text-xs text-orange-600">Provide feedback to refine the research results</p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {isProcessing ? (
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="text-center space-y-24 max-w-2xl">
-            <div className="flex items-center justify-center">
-              <Loader2 className="h-12 w-12 animate-spin text-black" />
+        {/* Rest of the content remains the same */}
+        {isProcessing ? (
+          <div className="flex-1 flex flex-col items-center justify-center">
+            <div className="text-center space-y-24 max-w-2xl">
+              <div className="flex items-center justify-center">
+                <Loader2 className="h-12 w-12 animate-spin text-black" />
+              </div>
+              <h2 className="text-xl font-bold uppercase tracking-wide">Generating Brand Research</h2>
+              <div className="space-y-4 text-left">
+                {processingSteps.map((step, index) => (
+                  <div key={index} className="flex items-center gap-4">
+                    <div className="w-4 h-4 rounded-full bg-black"></div>
+                    <p className="text-body text-gray-800">{step}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <h2 className="text-xl font-bold uppercase tracking-wide">Generating Brand Research</h2>
-            <div className="space-y-4 text-left">
-              {processingSteps.map((step, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <div className="w-4 h-4 rounded-full bg-black"></div>
-                  <p className="text-body text-gray-800">{step}</p>
+          </div>
+        ) : (
+          <>
+            {/* Conversation Thread */}
+            <div className="flex-1 space-y-6 mb-6">
+              {conversationHistory.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  {message.role === "assistant" && (
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                      <Lightbulb className="h-4 w-4 text-gray-600" />
+                    </div>
+                  )}
+
+                  <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
+                    <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
+                  </div>
+
+                  {message.role === "user" && (
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                      <Star className="h-4 w-4 text-gray-600" />
+                    </div>
+                  )}
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <>
-          {/* Conversation Thread */}
-          <div className="flex-1 space-y-6 mb-6">
-            {conversationHistory.map((message, index) => (
-              <div
-                key={index}
-                className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                {message.role === "assistant" && (
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                    <Lightbulb className="h-4 w-4 text-gray-600" />
-                  </div>
-                )}
-
-                <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
-                  <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
-                </div>
-
-                {message.role === "user" && (
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                    <Star className="h-4 w-4 text-gray-600" />
-                  </div>
-                )}
-              </div>
-            ))}
-            {/* Input Area - moved inside conversation thread */}
-            <div className="pt-6">
-              <form onSubmit={handleSubmit} className="flex gap-4">
-                <textarea
-                  placeholder={
-                    currentStage === "feedback" || currentStage === "feedback-clarification"
-                      ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
-                      : "Type your response..."
-                  }
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  className="flex-1 bg-white border-gray-200 rounded-md px-3 py-2 h-20 resize-none border text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault()
-                      handleSubmit(e)
+              {/* Input Area - moved inside conversation thread */}
+              <div className="pt-6">
+                <form onSubmit={handleSubmit} className="flex gap-4">
+                  <textarea
+                    placeholder={
+                      currentStage === "feedback" || currentStage === "feedback-clarification"
+                        ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
+                        : "Type your response..."
                     }
-                  }}
-                />
-                <Button type="submit" size="icon" className="bg-black text-white hover:bg-gray-800">
-                  <Send className="h-4 w-4" />
-                  <span className="sr-only">Send</span>
-                </Button>
-              </form>
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    className="flex-1 bg-white border-gray-200 rounded-md px-3 py-2 h-20 resize-none border text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault()
+                        handleSubmit(e)
+                      }
+                    }}
+                  />
+                  <Button type="submit" size="icon" className="bg-black text-white hover:bg-gray-800">
+                    <Send className="h-4 w-4" />
+                    <span className="sr-only">Send</span>
+                  </Button>
+                </form>
+              </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   )
 }
