@@ -34,6 +34,7 @@ export default function CoPilotInterface({
   const [processingSteps, setProcessingSteps] = useState<string[]>([])
   const [currentStage, setCurrentStage] = useState(feedbackMode ? "feedback" : stage)
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const [showConversationHistory, setShowConversationHistory] = useState(false)
 
   // Simulate LLM working in the background
   useEffect(() => {
@@ -233,29 +234,48 @@ export default function CoPilotInterface({
           <>
             {/* Conversation Thread - only show when not collapsed or not in feedback mode */}
             {(!feedbackMode || !isCollapsed) && (
-              <div className="flex-1 space-y-6 mb-6">
-                {conversationHistory.map((message, index) => (
-                  <div
-                    key={index}
-                    className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                    {message.role === "assistant" && (
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                        <Lightbulb className="h-4 w-4 text-gray-600" />
-                      </div>
-                    )}
-
-                    <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
-                      <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
-                    </div>
-
-                    {message.role === "user" && (
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                        <Star className="h-4 w-4 text-gray-600" />
-                      </div>
-                    )}
+              <div className="flex-1 space-y-6 mb-6 overflow-y-auto">
+                {/* Show conversation history toggle button in feedback mode */}
+                {feedbackMode && conversationHistory.length > 1 && (
+                  <div className="flex justify-center pb-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowConversationHistory(!showConversationHistory)}
+                      className="text-xs text-gray-500 hover:text-gray-700"
+                    >
+                      {showConversationHistory
+                        ? "Show less"
+                        : `View conversation history (${conversationHistory.length - 1} earlier messages)`}
+                    </Button>
                   </div>
-                ))}
+                )}
+
+                {/* Display messages based on feedback mode and history toggle */}
+                {(feedbackMode && !showConversationHistory ? conversationHistory.slice(-1) : conversationHistory).map(
+                  (message, index, displayedMessages) => (
+                    <div
+                      key={feedbackMode && !showConversationHistory ? `recent-${index}` : index}
+                      className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                    >
+                      {message.role === "assistant" && (
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                          <Lightbulb className="h-4 w-4 text-gray-600" />
+                        </div>
+                      )}
+
+                      <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
+                        <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
+                      </div>
+
+                      {message.role === "user" && (
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                          <Star className="h-4 w-4 text-gray-600" />
+                        </div>
+                      )}
+                    </div>
+                  ),
+                )}
               </div>
             )}
 
