@@ -8,37 +8,55 @@ import { Button } from "@/components/ui/button"
 import { Send, Lightbulb, Star, Loader2, Network } from "lucide-react"
 
 interface CoPilotInterfaceProps {
-  stage: "initial" | "region" | "division" | "results"
+  stage: "initial" | "region" | "division" | "results" | "feedback"
   onResponse: (stage: string, value: string) => void
+  feedbackMode?: boolean
+  onFeedbackComplete?: () => void
 }
 
-export default function CoPilotInterface({ stage, onResponse }: CoPilotInterfaceProps) {
+export default function CoPilotInterface({
+  stage,
+  onResponse,
+  feedbackMode = false,
+  onFeedbackComplete,
+}: CoPilotInterfaceProps) {
   const [userInput, setUserInput] = useState("")
   const [conversationHistory, setConversationHistory] = useState([
     {
       role: "assistant",
-      content: "Hey Chris, which company would you like to research today?",
+      content: feedbackMode
+        ? "I see you'd like to make some changes to the research results. What specific adjustments would you like me to make to better match what you're looking for?"
+        : "Hey Chris, which company would you like to research today?",
       timestamp: new Date(),
     },
   ])
   const [companyName, setCompanyName] = useState("")
   const [isProcessing, setIsProcessing] = useState(false)
   const [processingSteps, setProcessingSteps] = useState<string[]>([])
-  const [currentStage, setCurrentStage] = useState(stage)
+  const [currentStage, setCurrentStage] = useState(feedbackMode ? "feedback" : stage)
 
   // Simulate LLM working in the background
   useEffect(() => {
     if (isProcessing) {
-      const steps = [
-        "Searching for company information...",
-        `Finding recent news about ${companyName}...`,
-        "Analyzing market position...",
-        "Gathering financial data...",
-        "Identifying key partnerships...",
-        "Compiling sponsorship history...",
-        "Analyzing target audience...",
-        "Generating comprehensive report...",
-      ]
+      const steps =
+        currentStage === "processing-feedback"
+          ? [
+              "Processing your feedback...",
+              "Updating research parameters...",
+              "Re-analyzing company data...",
+              "Refining search results...",
+              "Generating updated report...",
+            ]
+          : [
+              "Searching for company information...",
+              `Finding recent news about ${companyName}...`,
+              "Analyzing market position...",
+              "Gathering financial data...",
+              "Identifying key partnerships...",
+              "Compiling sponsorship history...",
+              "Analyzing target audience...",
+              "Generating comprehensive report...",
+            ]
 
       let currentStep = 0
       const interval = setInterval(() => {
@@ -50,14 +68,18 @@ export default function CoPilotInterface({ stage, onResponse }: CoPilotInterface
           // Transition to results after processing is complete
           setTimeout(() => {
             setIsProcessing(false)
-            onResponse("results", companyName)
+            if (currentStage === "processing-feedback") {
+              onFeedbackComplete?.()
+            } else {
+              onResponse("results", companyName)
+            }
           }, 1500)
         }
       }, 1000)
 
       return () => clearInterval(interval)
     }
-  }, [isProcessing, companyName, onResponse])
+  }, [isProcessing, companyName, onResponse, currentStage, onFeedbackComplete])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -92,6 +114,18 @@ export default function CoPilotInterface({ stage, onResponse }: CoPilotInterface
       setIsProcessing(true)
       nextStage = "processing"
       setCurrentStage("processing")
+    } else if (currentStage === "feedback") {
+      assistantResponse =
+        "Thanks for the feedback! Let me update the research with your requirements. This will take a moment..."
+      setIsProcessing(true)
+      nextStage = "processing-feedback"
+      setCurrentStage("processing-feedback")
+
+      // After processing, complete the feedback cycle
+      setTimeout(() => {
+        setIsProcessing(false)
+        onFeedbackComplete?.()
+      }, 3000)
     }
 
     const newAssistantMessage = {
