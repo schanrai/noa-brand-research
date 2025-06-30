@@ -265,7 +265,7 @@ export default function CoPilotInterface({
             </div>
 
             {/* Input Area - moved outside conversation thread and positioned at bottom */}
-            <div className="pt-6 border-t border-gray-200 bg-white">
+            <div className="pt-6 border-t border-gray-200">
               <form onSubmit={handleSubmit} className="flex gap-4">
                 <textarea
                   placeholder={
