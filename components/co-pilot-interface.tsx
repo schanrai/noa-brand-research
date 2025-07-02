@@ -301,7 +301,7 @@ export default function CoPilotInterface({
                 <textarea
                   placeholder={
                     currentStage === "feedback" || currentStage === "feedback-clarification"
-                      ? "Try: 'Focus on companies with 500+ employees' or 'Look for companies in healthcare instead' or 'Find companies in Europe only'"
+                      ? "Try: 'Focus more on their recent partnerships' or 'Include more financial data' or 'Add information about their sustainability initiatives' or 'Expand on their target audience demographics'"
                       : "Type your response..."
                   }
                   value={userInput}
