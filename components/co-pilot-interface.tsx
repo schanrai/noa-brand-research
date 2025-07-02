@@ -139,9 +139,36 @@ export default function CoPilotInterface({
         nextStage = "feedback-clarification"
         setCurrentStage("feedback-clarification")
       } else {
-        // Generic feedback - ask for more specifics
-        assistantResponse =
-          "Thanks for the feedback! To help me improve the results, could you be more specific? For example, are you looking for a different industry, company size, geographic region, or completely different company?"
+        // Generic feedback - ask for more specifics with context from user input
+        const contextualSuggestions = []
+
+        if (feedback.includes("more") || feedback.includes("add") || feedback.includes("include")) {
+          contextualSuggestions.push("add more detailed information about specific aspects")
+        }
+        if (feedback.includes("less") || feedback.includes("remove") || feedback.includes("exclude")) {
+          contextualSuggestions.push("focus on fewer areas with deeper analysis")
+        }
+        if (feedback.includes("recent") || feedback.includes("latest") || feedback.includes("current")) {
+          contextualSuggestions.push("emphasize more recent developments and news")
+        }
+        if (feedback.includes("financial") || feedback.includes("revenue") || feedback.includes("profit")) {
+          contextualSuggestions.push("expand the financial analysis section")
+        }
+        if (feedback.includes("competitor") || feedback.includes("competition") || feedback.includes("market")) {
+          contextualSuggestions.push("include more competitive landscape analysis")
+        }
+        if (feedback.includes("partnership") || feedback.includes("collaboration") || feedback.includes("alliance")) {
+          contextualSuggestions.push("detail their strategic partnerships and collaborations")
+        }
+
+        const baseMessage = `Thanks for the feedback! Based on your input "${userInput}", I can help you refine the research.`
+
+        if (contextualSuggestions.length > 0) {
+          assistantResponse = `${baseMessage} Would you like me to ${contextualSuggestions.join(", or ")}? Please let me know which specific aspects you'd like me to adjust.`
+        } else {
+          assistantResponse = `${baseMessage} Could you be more specific about what you'd like me to adjust? For example, would you like me to focus more on their recent developments, expand on their financial performance, include more partnership details, or analyze their competitive position?`
+        }
+
         nextStage = "feedback-clarification"
         setCurrentStage("feedback-clarification")
       }
