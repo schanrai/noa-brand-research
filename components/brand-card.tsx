@@ -12,9 +12,17 @@ interface BrandCardProps {
   onToggleExpand: () => void
   onApprove: () => void
   onReject: () => void
+  showActions?: boolean
 }
 
-export default function BrandCard({ company, isExpanded, onToggleExpand, onApprove, onReject }: BrandCardProps) {
+export default function BrandCard({
+  company,
+  isExpanded,
+  onToggleExpand,
+  onApprove,
+  onReject,
+  showActions = true,
+}: BrandCardProps) {
   return (
     <Card className="card-premium">
       <CardContent className="p-24">
@@ -61,25 +69,31 @@ export default function BrandCard({ company, isExpanded, onToggleExpand, onAppro
           </Button>
         </div>
       </CardContent>
-      {!company.inCRM ? (
-        <CardFooter className="flex justify-end gap-16 border-t border-gray-200 bg-edge px-24 py-16">
-          <Button variant="outline" size="sm" onClick={onReject} className="btn-premium border-gray-200 hover-scale">
-            <X className="mr-2 h-4 w-4" />
-            <span className="text-xs">Reject</span>
-          </Button>
-          <Button size="sm" onClick={onApprove} className="btn-premium bg-black text-white hover:bg-gray-800">
-            <Check className="mr-2 h-4 w-4" />
-            <span className="text-xs">Approve for CRM</span>
-          </Button>
-        </CardFooter>
-      ) : (
-        <CardFooter className="flex justify-end gap-16 border-t border-gray-200 bg-edge px-24 py-16">
-          <div className="flex items-center text-green-600">
-            <Check className="mr-2 h-4 w-4" />
-            <span className="text-xs font-medium">Already in CRM</span>
-          </div>
-        </CardFooter>
-      )}
+      {showActions &&
+        (!company.inCRM ? (
+          <CardFooter className="flex justify-end gap-16 border-t border-gray-200 bg-edge px-24 py-16">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onReject}
+              className="btn-premium border-gray-200 hover-scale bg-transparent"
+            >
+              <X className="mr-2 h-4 w-4" />
+              <span className="text-xs">Reject</span>
+            </Button>
+            <Button size="sm" onClick={onApprove} className="btn-premium bg-black text-white hover:bg-gray-800">
+              <Check className="mr-2 h-4 w-4" />
+              <span className="text-xs">Approve for CRM</span>
+            </Button>
+          </CardFooter>
+        ) : (
+          <CardFooter className="flex justify-end gap-16 border-t border-gray-200 bg-edge px-24 py-16">
+            <div className="flex items-center text-green-600">
+              <Check className="mr-2 h-4 w-4" />
+              <span className="text-xs font-medium">Already in CRM</span>
+            </div>
+          </CardFooter>
+        ))}
     </Card>
   )
 }

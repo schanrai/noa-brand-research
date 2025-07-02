@@ -26,6 +26,7 @@ export default function MainContent({
   onChatResponse,
 }: MainContentProps) {
   const [expandedCompanyId, setExpandedCompanyId] = useState<string | null>(null)
+  const [feedbackMode, setFeedbackMode] = useState(false)
 
   const handleToggleExpand = (companyId: string) => {
     if (expandedCompanyId === companyId) {
@@ -39,24 +40,37 @@ export default function MainContent({
     }
   }
 
+  const handleReject = (companyId: string) => {
+    setFeedbackMode(true)
+  }
+
   return (
-    <div className="flex-1 overflow-auto p-48 bg-main">
-      {searchStage !== "results" && <CoPilotInterface stage={searchStage} onResponse={onChatResponse} />}
+    <div className="flex-1 overflow-auto p-48 bg-main pt-[22px] pb-52">
+      {(searchStage !== "results" || feedbackMode) && (
+        <CoPilotInterface
+          stage={feedbackMode ? "feedback" : searchStage}
+          onResponse={onChatResponse}
+          feedbackMode={feedbackMode}
+          onFeedbackComplete={() => setFeedbackMode(false)}
+        />
+      )}
 
       {searchStage === "results" && searchResults.length > 0 && (
         <div className="space-y-48">
-          <div>
-            <h3 className="text-base font-bold uppercase tracking-wide mb-16">Research Result</h3>
-            <div className="flex items-start gap-16 mb-48 p-24 border border-gray-200 rounded-lg bg-white">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                <Lightbulb className="h-4 w-4 text-gray-600" />
+          {!feedbackMode && (
+            <div>
+              <h3 className="text-base font-bold uppercase tracking-wide mb-16">Research Result</h3>
+              <div className="flex items-start gap-16 mb-48 p-24 border border-gray-200 rounded-lg bg-white">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                  <Lightbulb className="h-4 w-4 text-gray-600" />
+                </div>
+                <p className="text-body text-gray-800 leading-relaxed">
+                  Chris, here are the results of your search for {searchResults[0]?.companyName || "the company"}, for
+                  the division of {searchResults[0]?.regions[0] || "North America"}.... now please approve or reject
+                </p>
               </div>
-              <p className="text-body text-gray-800 leading-relaxed">
-                Chris, here are the results of your search for {searchResults[0]?.companyName || "the company"}, for the
-                division of {searchResults[0]?.regions[0] || "North America"}.... now please approve or reject
-              </p>
             </div>
-          </div>
+          )}
 
           <div className="space-y-24">
             {searchResults.map((company) => (
@@ -66,7 +80,8 @@ export default function MainContent({
                   isExpanded={expandedCompanyId === company.id}
                   onToggleExpand={() => handleToggleExpand(company.id)}
                   onApprove={() => onApprove(company.id)}
-                  onReject={() => onReject(company.id)}
+                  onReject={() => handleReject(company.id)}
+                  showActions={!feedbackMode}
                 />
 
                 {expandedCompanyId === company.id && <BrandProfilePanel company={company} />}
