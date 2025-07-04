@@ -62,10 +62,10 @@ export default function ConfirmationModal({
         </DialogHeader>
 
         <DialogDescription id="confirmation-description" className="space-y-4">
-          <p className="text-body text-gray-700 leading-relaxed">
+          <div className="text-body text-gray-700 leading-relaxed">
             This will add <strong>{company.companyName}</strong> to your CRM with all available contact information and
             research data. You'll be able to track interactions and manage the relationship from your CRM dashboard.
-          </p>
+          </div>
 
           {/* Quick company overview */}
           <div className="bg-edge rounded-lg p-4 space-y-3">
@@ -108,13 +108,13 @@ export default function ConfirmationModal({
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="text-sm font-medium">{contact.name}</p>
-                      <p className="text-xs text-gray-500">{contact.title}</p>
+                      <div className="text-sm font-medium">{contact.name}</div>
+                      <div className="text-xs text-gray-500">{contact.title}</div>
                     </div>
                   </div>
                 ))}
                 {company.contacts.length > 2 && (
-                  <p className="text-xs text-gray-500 pl-2">+{company.contacts.length - 2} more contacts</p>
+                  <div className="text-xs text-gray-500 pl-2">+{company.contacts.length - 2} more contacts</div>
                 )}
               </div>
             </div>
@@ -125,10 +125,10 @@ export default function ConfirmationModal({
             <div className="flex items-start gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
               <AlertTriangle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-medium text-yellow-800">Company already in CRM</p>
-                <p className="text-xs text-yellow-700">
+                <div className="text-sm font-medium text-yellow-800">Company already in CRM</div>
+                <div className="text-xs text-yellow-700">
                   This will update existing records with new research data and contacts.
-                </p>
+                </div>
               </div>
             </div>
           )}
@@ -157,7 +157,7 @@ export default function ConfirmationModal({
               </div>
               <div>
                 <h5 className="text-xs font-semibold uppercase tracking-wide mb-1">Strategic Focus</h5>
-                <p className="text-xs text-gray-600">{company.strategicFocus}</p>
+                <div className="text-xs text-gray-600">{company.strategicFocus}</div>
               </div>
             </div>
           )}
