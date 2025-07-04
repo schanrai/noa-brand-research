@@ -100,8 +100,38 @@ export default function Home() {
     }
   }
 
+  const handleToastDismiss = () => {
+    setToastNotification({ ...toastNotification, show: false })
+
+    // Reset to initial search state after toast is dismissed
+    setTimeout(() => {
+      setSearchStage("initial")
+      setSearchResults([])
+      setSelectedCompany(null)
+      setFilters({
+        region: "",
+        industry: "",
+        sponsorshipType: "",
+        size: "",
+        revenue: "",
+      })
+    }, 300) // Small delay to allow toast fade-out animation
+  }
+
   const handleChatResponse = (stage: string, value: string) => {
-    if (stage === "region") {
+    if (stage === "reset-to-initial") {
+      // Handle reset from top navigation
+      setSearchStage("initial")
+      setSearchResults([])
+      setSelectedCompany(null)
+      setFilters({
+        region: "",
+        industry: "",
+        sponsorshipType: "",
+        size: "",
+        revenue: "",
+      })
+    } else if (stage === "region") {
       setSearchStage("region")
       // In a real app, this would update the chat history
     } else if (stage === "division") {
@@ -157,7 +187,7 @@ export default function Home() {
 
   return (
     <div className="flex h-screen flex-col">
-      <TopNavigation />
+      <TopNavigation onTabChange={handleChatResponse} />
       <div className="flex flex-1 overflow-hidden">
         <LeftSidebar onSearch={handleSearch} />
         <MainContent
@@ -178,7 +208,7 @@ export default function Home() {
           type={toastNotification.type}
           company={toastNotification.company}
           message={toastNotification.message}
-          onDismiss={() => setToastNotification({ ...toastNotification, show: false })}
+          onDismiss={handleToastDismiss}
           autoHide={true}
           duration={5000}
         />

@@ -36,6 +36,26 @@ export default function CoPilotInterface({
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [showConversationHistory, setShowConversationHistory] = useState(false)
 
+  // Reset conversation when stage changes to initial
+  useEffect(() => {
+    if (stage === "initial" && !feedbackMode) {
+      setConversationHistory([
+        {
+          role: "assistant",
+          content: "Hey Chris, which company would you like to research today?",
+          timestamp: new Date(),
+        },
+      ])
+      setUserInput("")
+      setCompanyName("")
+      setIsProcessing(false)
+      setProcessingSteps([])
+      setCurrentStage("initial")
+      setIsCollapsed(false)
+      setShowConversationHistory(false)
+    }
+  }, [stage, feedbackMode])
+
   // Simulate LLM working in the background
   useEffect(() => {
     if (isProcessing) {
