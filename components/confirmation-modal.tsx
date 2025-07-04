@@ -61,12 +61,12 @@ export default function ConfirmationModal({
           </div>
         </DialogHeader>
 
-        <DialogDescription id="confirmation-description" className="space-y-4">
-          <div className="text-body text-gray-700 leading-relaxed">
-            This will add <strong>{company.companyName}</strong> to your CRM with all available contact information and
-            research data. You'll be able to track interactions and manage the relationship from your CRM dashboard.
-          </div>
+        <DialogDescription id="confirmation-description" className="text-body text-gray-700 leading-relaxed">
+          This will add {company.companyName} to your CRM with all available contact information and research data.
+          You'll be able to track interactions and manage the relationship from your CRM dashboard.
+        </DialogDescription>
 
+        <div className="space-y-4">
           {/* Quick company overview */}
           <div className="bg-edge rounded-lg p-4 space-y-3">
             <h4 className="text-sm font-semibold uppercase tracking-wide">Company Overview</h4>
@@ -161,7 +161,7 @@ export default function ConfirmationModal({
               </div>
             </div>
           )}
-        </DialogDescription>
+        </div>
 
         <Separator className="my-4" />
 
