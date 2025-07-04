@@ -5,6 +5,7 @@ import TopNavigation from "@/components/top-navigation"
 import LeftSidebar from "@/components/left-sidebar"
 import MainContent from "@/components/main-content"
 import RightSidebar from "@/components/right-sidebar"
+import ConfirmationToast from "@/components/confirmation-toast"
 import brandsData from "@/data/brands.json"
 
 export default function Home() {
@@ -17,6 +18,18 @@ export default function Home() {
     sponsorshipType: "",
     size: "",
     revenue: "",
+  })
+
+  // Toast notification state
+  const [toastNotification, setToastNotification] = useState<{
+    show: boolean
+    type: "success" | "error" | "pending"
+    company?: any
+    message: string
+  }>({
+    show: false,
+    type: "success",
+    message: "",
   })
 
   const handleSearch = (newFilters: any) => {
@@ -52,17 +65,63 @@ export default function Home() {
   }
 
   const handleApprove = (companyId: string) => {
-    // In a real app, this would send data to the backend
-    console.log(`Company ${companyId} approved for CRM`)
-    // For now, just show a simulated success message
-    alert(`Company approved for CRM!`)
+    const company = searchResults.find((c) => c.id === companyId)
+    if (company) {
+      // Show success toast notification
+      setToastNotification({
+        show: true,
+        type: "success",
+        company: company,
+        message: company.inCRM
+          ? `${company.companyName} has been updated in your CRM with the latest research data and contacts.`
+          : `${company.companyName} has been successfully added to your CRM. You can now track interactions and manage this relationship.`,
+      })
+
+      // Update the company's CRM status in the results
+      setSearchResults((prevResults) => prevResults.map((c) => (c.id === companyId ? { ...c, inCRM: true } : c)))
+    }
   }
 
   const handleReject = (companyId: string) => {
-    // In a real app, this would send data to the backend
-    console.log(`Company ${companyId} rejected`)
-    // For now, just show a simulated success message
-    alert(`Company rejected!`)
+    const company = searchResults.find((c) => c.id === companyId)
+    if (company) {
+      // Show rejection confirmation
+      setToastNotification({
+        show: true,
+        type: "success",
+        company: company,
+        message: `${company.companyName} has been rejected and will not be added to your CRM.`,
+      })
+
+      // Remove the company from search results after a delay
+      setTimeout(() => {
+        setSearchResults((prevResults) => prevResults.filter((c) => c.id !== companyId))
+      }, 2000)
+    }
+  }
+
+  const handleUndo = () => {
+    if (toastNotification.company) {
+      // Revert the CRM status
+      setSearchResults((prevResults) =>
+        prevResults.map((c) => (c.id === toastNotification.company.id ? { ...c, inCRM: false } : c)),
+      )
+
+      // Show undo confirmation
+      setToastNotification({
+        show: true,
+        type: "success",
+        company: toastNotification.company,
+        message: `Action undone. ${toastNotification.company.companyName} has been removed from your CRM.`,
+      })
+    }
+  }
+
+  const handleViewCRM = () => {
+    if (toastNotification.company) {
+      // Open CRM in new tab (simulate)
+      window.open(`/crm/companies/${toastNotification.company.id}`, "_blank")
+    }
   }
 
   const handleChatResponse = (stage: string, value: string) => {
@@ -136,6 +195,22 @@ export default function Home() {
         />
         <RightSidebar />
       </div>
+
+      {/* Toast Notification */}
+      {toastNotification.show && (
+        <ConfirmationToast
+          type={toastNotification.type}
+          company={toastNotification.company}
+          message={toastNotification.message}
+          onUndo={toastNotification.type === "success" ? handleUndo : undefined}
+          onViewCRM={
+            toastNotification.type === "success" && toastNotification.company?.inCRM ? handleViewCRM : undefined
+          }
+          onDismiss={() => setToastNotification({ ...toastNotification, show: false })}
+          autoHide={true}
+          duration={6000}
+        />
+      )}
     </div>
   )
 }

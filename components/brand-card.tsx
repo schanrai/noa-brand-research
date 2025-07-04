@@ -36,17 +36,9 @@ export default function BrandCard({
 
   const handleApproveClick = () => {
     // You can change this to test different confirmation methods
+    // For now, let's use the modal for the primary flow
     setConfirmationMethod("modal")
-
-    if (confirmationMethod === "modal") {
-      setShowModal(true)
-    } else if (confirmationMethod === "inline") {
-      setShowInlineConfirmation(true)
-      handleCRMAction()
-    } else {
-      setShowToast(true)
-      handleCRMAction()
-    }
+    setShowModal(true)
   }
 
   const handleCRMAction = async () => {
@@ -56,7 +48,11 @@ export default function BrandCard({
       } else {
         await addToCRM(company) // Add new
       }
-      onApprove()
+
+      // Only call onApprove after successful CRM action
+      if (state.success) {
+        onApprove()
+      }
     } catch (error) {
       console.error("CRM action failed:", error)
     }
@@ -65,6 +61,13 @@ export default function BrandCard({
   const handleModalConfirm = async () => {
     await handleCRMAction()
     setShowModal(false)
+    // Call the parent's onApprove to trigger the toast notification
+    onApprove()
+  }
+
+  const handleRejectClick = () => {
+    // Call the parent's onReject to trigger the rejection flow
+    onReject()
   }
 
   const handleUndo = async () => {
@@ -178,7 +181,7 @@ export default function BrandCard({
             <Button
               variant="outline"
               size="sm"
-              onClick={onReject}
+              onClick={handleRejectClick}
               className="btn-premium border-gray-200 hover-scale bg-transparent"
             >
               <X className="mr-2 h-4 w-4" />
@@ -207,7 +210,7 @@ export default function BrandCard({
         isLoading={state.isLoading}
       />
 
-      {/* Toast confirmation */}
+      {/* Toast confirmation - only show if using toast method */}
       {showToast && (
         <ConfirmationToast
           type={getConfirmationStatus()}
