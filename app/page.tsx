@@ -5,6 +5,7 @@ import TopNavigation from "@/components/top-navigation"
 import LeftSidebar from "@/components/left-sidebar"
 import MainContent from "@/components/main-content"
 import RightSidebar from "@/components/right-sidebar"
+import ConfirmationToast from "@/components/confirmation-toast"
 import brandsData from "@/data/brands.json"
 
 export default function Home() {
@@ -17,6 +18,18 @@ export default function Home() {
     sponsorshipType: "",
     size: "",
     revenue: "",
+  })
+
+  // Toast notification state
+  const [toastNotification, setToastNotification] = useState<{
+    show: boolean
+    type: "success" | "error" | "pending"
+    company?: any
+    message: string
+  }>({
+    show: false,
+    type: "success",
+    message: "",
   })
 
   const handleSearch = (newFilters: any) => {
@@ -52,21 +65,73 @@ export default function Home() {
   }
 
   const handleApprove = (companyId: string) => {
-    // In a real app, this would send data to the backend
-    console.log(`Company ${companyId} approved for CRM`)
-    // For now, just show a simulated success message
-    alert(`Company approved for CRM!`)
+    const company = searchResults.find((c) => c.id === companyId)
+    if (company) {
+      // Show success toast notification
+      setToastNotification({
+        show: true,
+        type: "success",
+        company: company,
+        message: company.inCRM
+          ? `${company.companyName} has been updated in your CRM.`
+          : `${company.companyName} has been added to your CRM.`,
+      })
+
+      // Update the company's CRM status in the results
+      setSearchResults((prevResults) => prevResults.map((c) => (c.id === companyId ? { ...c, inCRM: true } : c)))
+    }
   }
 
   const handleReject = (companyId: string) => {
-    // In a real app, this would send data to the backend
-    console.log(`Company ${companyId} rejected`)
-    // For now, just show a simulated success message
-    alert(`Company rejected!`)
+    const company = searchResults.find((c) => c.id === companyId)
+    if (company) {
+      // Show rejection confirmation
+      setToastNotification({
+        show: true,
+        type: "success",
+        company: company,
+        message: `${company.companyName} has been rejected.`,
+      })
+
+      // Remove the company from search results after a delay
+      setTimeout(() => {
+        setSearchResults((prevResults) => prevResults.filter((c) => c.id !== companyId))
+      }, 2000)
+    }
+  }
+
+  const handleToastDismiss = () => {
+    setToastNotification({ ...toastNotification, show: false })
+
+    // Reset to initial search state after toast is dismissed
+    setTimeout(() => {
+      setSearchStage("initial")
+      setSearchResults([])
+      setSelectedCompany(null)
+      setFilters({
+        region: "",
+        industry: "",
+        sponsorshipType: "",
+        size: "",
+        revenue: "",
+      })
+    }, 300) // Small delay to allow toast fade-out animation
   }
 
   const handleChatResponse = (stage: string, value: string) => {
-    if (stage === "region") {
+    if (stage === "reset-to-initial") {
+      // Handle reset from top navigation
+      setSearchStage("initial")
+      setSearchResults([])
+      setSelectedCompany(null)
+      setFilters({
+        region: "",
+        industry: "",
+        sponsorshipType: "",
+        size: "",
+        revenue: "",
+      })
+    } else if (stage === "region") {
       setSearchStage("region")
       // In a real app, this would update the chat history
     } else if (stage === "division") {
@@ -122,7 +187,7 @@ export default function Home() {
 
   return (
     <div className="flex h-screen flex-col">
-      <TopNavigation />
+      <TopNavigation onTabChange={handleChatResponse} />
       <div className="flex flex-1 overflow-hidden">
         <LeftSidebar onSearch={handleSearch} />
         <MainContent
@@ -136,6 +201,18 @@ export default function Home() {
         />
         <RightSidebar />
       </div>
+
+      {/* Toast Notification */}
+      {toastNotification.show && (
+        <ConfirmationToast
+          type={toastNotification.type}
+          company={toastNotification.company}
+          message={toastNotification.message}
+          onDismiss={handleToastDismiss}
+          autoHide={true}
+          duration={5000}
+        />
+      )}
     </div>
   )
 }
