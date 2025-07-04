@@ -6,8 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { ChevronDown, ChevronUp, Check, X } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import ConfirmationModal from "./confirmation-modal"
-import InlineConfirmation from "./inline-confirmation"
-import ConfirmationToast from "./confirmation-toast"
 import { useCRMActions } from "@/hooks/use-crm-actions"
 import { useState } from "react"
 
@@ -29,37 +27,13 @@ export default function BrandCard({
   showActions = true,
 }: BrandCardProps) {
   const [showModal, setShowModal] = useState(false)
-  const [showToast, setShowToast] = useState(false)
-  const [showInlineConfirmation, setShowInlineConfirmation] = useState(false)
-  const [confirmationMethod, setConfirmationMethod] = useState<"modal" | "inline" | "toast">("modal")
-  const { state, addToCRM, removeFromCRM, reset } = useCRMActions()
+  const { state } = useCRMActions()
 
   const handleApproveClick = () => {
-    // You can change this to test different confirmation methods
-    // For now, let's use the modal for the primary flow
-    setConfirmationMethod("modal")
     setShowModal(true)
   }
 
-  const handleCRMAction = async () => {
-    try {
-      if (company.inCRM) {
-        await addToCRM(company) // Update existing
-      } else {
-        await addToCRM(company) // Add new
-      }
-
-      // Only call onApprove after successful CRM action
-      if (state.success) {
-        onApprove()
-      }
-    } catch (error) {
-      console.error("CRM action failed:", error)
-    }
-  }
-
   const handleModalConfirm = async () => {
-    await handleCRMAction()
     setShowModal(false)
     // Call the parent's onApprove to trigger the toast notification
     onApprove()
@@ -70,60 +44,8 @@ export default function BrandCard({
     onReject()
   }
 
-  const handleUndo = async () => {
-    await removeFromCRM(company.id)
-    setShowToast(false)
-    setShowInlineConfirmation(false)
-    reset()
-  }
-
-  const handleViewCRM = () => {
-    // Navigate to CRM or open in new tab
-    window.open(`/crm/companies/${company.id}`, "_blank")
-  }
-
-  const getConfirmationMessage = () => {
-    if (state.error) {
-      return state.error
-    }
-    if (state.isLoading) {
-      return company.inCRM
-        ? `Updating ${company.companyName} in your CRM...`
-        : `Adding ${company.companyName} to your CRM...`
-    }
-    if (state.success) {
-      return company.inCRM
-        ? `${company.companyName} has been updated in your CRM with the latest research data and contacts.`
-        : `${company.companyName} has been successfully added to your CRM. You can now track interactions and manage this relationship.`
-    }
-    return ""
-  }
-
-  const getConfirmationStatus = () => {
-    if (state.error) return "error"
-    if (state.isLoading) return "pending"
-    if (state.success) return "success"
-    return "pending"
-  }
-
   return (
     <>
-      {/* Inline confirmation - shows above the card */}
-      {showInlineConfirmation && (
-        <InlineConfirmation
-          company={company}
-          status={getConfirmationStatus()}
-          message={getConfirmationMessage()}
-          onUndo={state.success ? handleUndo : undefined}
-          onViewCRM={state.success ? handleViewCRM : undefined}
-          onRetry={state.error ? handleCRMAction : undefined}
-          onDismiss={() => {
-            setShowInlineConfirmation(false)
-            reset()
-          }}
-        />
-      )}
-
       <Card className="card-premium">
         <CardContent className="p-24">
           <div className="flex items-start justify-between">
@@ -209,21 +131,6 @@ export default function BrandCard({
         onCancel={() => setShowModal(false)}
         isLoading={state.isLoading}
       />
-
-      {/* Toast confirmation - only show if using toast method */}
-      {showToast && (
-        <ConfirmationToast
-          type={getConfirmationStatus()}
-          company={company}
-          message={getConfirmationMessage()}
-          onUndo={state.success ? handleUndo : undefined}
-          onViewCRM={state.success ? handleViewCRM : undefined}
-          onDismiss={() => {
-            setShowToast(false)
-            reset()
-          }}
-        />
-      )}
     </>
   )
 }

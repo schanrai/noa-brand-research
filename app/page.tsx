@@ -73,8 +73,8 @@ export default function Home() {
         type: "success",
         company: company,
         message: company.inCRM
-          ? `${company.companyName} has been updated in your CRM with the latest research data and contacts.`
-          : `${company.companyName} has been successfully added to your CRM. You can now track interactions and manage this relationship.`,
+          ? `${company.companyName} has been updated in your CRM.`
+          : `${company.companyName} has been added to your CRM.`,
       })
 
       // Update the company's CRM status in the results
@@ -90,37 +90,13 @@ export default function Home() {
         show: true,
         type: "success",
         company: company,
-        message: `${company.companyName} has been rejected and will not be added to your CRM.`,
+        message: `${company.companyName} has been rejected.`,
       })
 
       // Remove the company from search results after a delay
       setTimeout(() => {
         setSearchResults((prevResults) => prevResults.filter((c) => c.id !== companyId))
       }, 2000)
-    }
-  }
-
-  const handleUndo = () => {
-    if (toastNotification.company) {
-      // Revert the CRM status
-      setSearchResults((prevResults) =>
-        prevResults.map((c) => (c.id === toastNotification.company.id ? { ...c, inCRM: false } : c)),
-      )
-
-      // Show undo confirmation
-      setToastNotification({
-        show: true,
-        type: "success",
-        company: toastNotification.company,
-        message: `Action undone. ${toastNotification.company.companyName} has been removed from your CRM.`,
-      })
-    }
-  }
-
-  const handleViewCRM = () => {
-    if (toastNotification.company) {
-      // Open CRM in new tab (simulate)
-      window.open(`/crm/companies/${toastNotification.company.id}`, "_blank")
     }
   }
 
@@ -202,13 +178,9 @@ export default function Home() {
           type={toastNotification.type}
           company={toastNotification.company}
           message={toastNotification.message}
-          onUndo={toastNotification.type === "success" ? handleUndo : undefined}
-          onViewCRM={
-            toastNotification.type === "success" && toastNotification.company?.inCRM ? handleViewCRM : undefined
-          }
           onDismiss={() => setToastNotification({ ...toastNotification, show: false })}
           autoHide={true}
-          duration={6000}
+          duration={5000}
         />
       )}
     </div>
