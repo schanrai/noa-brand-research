@@ -35,6 +35,23 @@ export default function Home() {
   const handleSearch = (newFilters: any) => {
     setFilters({ ...filters, ...newFilters })
 
+    // Check if all filters are empty (this indicates a reset/clear all action)
+    const allFiltersEmpty =
+      !newFilters.query &&
+      !newFilters.region &&
+      !newFilters.industry &&
+      !newFilters.sponsorshipType &&
+      !newFilters.size &&
+      !newFilters.revenue
+
+    if (allFiltersEmpty) {
+      // Reset to initial state
+      setSearchStage("initial")
+      setSearchResults([])
+      setSelectedCompany(null)
+      return
+    }
+
     // Filter companies based on the selected filters
     let results = [...brandsData.companies]
 
