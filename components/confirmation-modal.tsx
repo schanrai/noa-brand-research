@@ -52,7 +52,7 @@ export default function ConfirmationModal({
             </Avatar>
             <div className="flex-1">
               <DialogTitle className="text-xl font-bold uppercase tracking-wide text-left">
-                Add {company.companyName} to CRM?
+                Update {company.companyName} in CRM?
               </DialogTitle>
               <p className="text-sm text-gray-600 font-medium uppercase tracking-wide mt-1">
                 {company.industry} • {company.hqLocation}
@@ -62,8 +62,9 @@ export default function ConfirmationModal({
         </DialogHeader>
 
         <DialogDescription id="confirmation-description" className="text-base text-gray-700 leading-relaxed">
-          This will add {company.companyName} to your CRM with all available contact information and research data.
-          You'll be able to track interactions and manage the relationship from your CRM dashboard.
+          This will update {company.companyName} in your CRM with the latest research data and any new contact
+          information discovered. You'll be able to track new interactions and manage the updated relationship from your
+          CRM dashboard.
         </DialogDescription>
 
         <div className="space-y-6 py-4">
@@ -122,12 +123,12 @@ export default function ConfirmationModal({
 
           {/* Warning for existing CRM entries */}
           {company.inCRM && (
-            <div className="flex items-start gap-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <AlertTriangle className="h-6 w-6 text-yellow-600 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <AlertTriangle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
               <div>
-                <div className="text-sm font-medium text-yellow-800">Company already in CRM</div>
-                <div className="text-sm text-yellow-700 mt-1">
-                  This will update existing records with new research data and contacts.
+                <div className="text-sm font-medium text-blue-800">Updating existing CRM record</div>
+                <div className="text-sm text-blue-700 mt-1">
+                  This will refresh existing records with new research data and any additional contacts found.
                 </div>
               </div>
             </div>
@@ -182,12 +183,12 @@ export default function ConfirmationModal({
             {isLoading ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                Adding to CRM...
+                Updating CRM...
               </>
             ) : (
               <>
                 <Building2 className="h-4 w-4 mr-2" />
-                Add to CRM
+                Update CRM
               </>
             )}
           </Button>

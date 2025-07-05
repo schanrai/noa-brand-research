@@ -35,8 +35,33 @@ export default function Home() {
   const handleSearch = (newFilters: any) => {
     setFilters({ ...filters, ...newFilters })
 
-    // Filter companies based on the selected filters
-    let results = [...brandsData.companies]
+    // Check if all filters are empty (this indicates a reset/clear all action)
+    const allFiltersEmpty =
+      !newFilters.query &&
+      !newFilters.region &&
+      !newFilters.industry &&
+      !newFilters.sponsorshipType &&
+      !newFilters.size &&
+      !newFilters.revenue
+
+    if (allFiltersEmpty) {
+      // Reset to initial state
+      setSearchStage("initial")
+      setSearchResults([])
+      setSelectedCompany(null)
+      return
+    }
+
+    // Filter companies based on the selected filters - only show companies already in CRM
+    let results = brandsData.companies.filter((company) => company.inCRM)
+
+    if (newFilters.query) {
+      results = results.filter(
+        (company) =>
+          company.companyName.toLowerCase().includes(newFilters.query.toLowerCase()) ||
+          company.description.toLowerCase().includes(newFilters.query.toLowerCase()),
+      )
+    }
 
     if (newFilters.region) {
       results = results.filter((company) =>
@@ -53,6 +78,33 @@ export default function Home() {
         company.sponsorshipTypes.some((type: string) =>
           type.toLowerCase().includes(newFilters.sponsorshipType.toLowerCase()),
         ),
+      )
+    }
+
+    if (newFilters.size) {
+      // Add size filtering logic based on employee count
+      const sizeRanges = {
+        "1-10": [1, 10],
+        "11-50": [11, 50],
+        "51-200": [51, 200],
+        "201-500": [201, 500],
+        "501-1000": [501, 1000],
+        "1001-5000": [1001, 5000],
+        "5001-10000": [5001, 10000],
+        "10001+": [10001, Number.POSITIVE_INFINITY],
+      }
+
+      const range = sizeRanges[newFilters.size as keyof typeof sizeRanges]
+      if (range) {
+        results = results.filter((company) => company.employees >= range[0] && company.employees <= range[1])
+      }
+    }
+
+    if (newFilters.revenue) {
+      // Add revenue filtering logic - this would need more sophisticated parsing
+      // For now, we'll do a simple string match
+      results = results.filter((company) =>
+        company.annualRevenue.toLowerCase().includes(newFilters.revenue.toLowerCase()),
       )
     }
 

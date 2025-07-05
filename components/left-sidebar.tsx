@@ -30,6 +30,24 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
     })
   }
 
+  const handleReset = () => {
+    setSearchQuery("")
+    setRegion("")
+    setIndustry("")
+    setSponsorshipType("")
+    setSize("")
+    setRevenue("")
+
+    onSearch({
+      query: "",
+      region: "",
+      industry: "",
+      sponsorshipType: "",
+      size: "",
+      revenue: "",
+    })
+  }
+
   return (
     <div className="w-80 border-r border-gray-200 bg-edge pt-24 px-24 pb-24">
       <div className="space-y-24">
@@ -53,7 +71,12 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
         </div>
 
         <div className="space-y-24 flex-1 overflow-hidden">
-          <h2 className="text-sm font-bold uppercase tracking-wide">Filters</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-bold uppercase tracking-wide">Filters</h2>
+            <button onClick={handleReset} className="text-xs text-gray-500 hover:text-gray-700 underline">
+              Clear all
+            </button>
+          </div>
 
           <ScrollArea className="h-[400px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
             <div className="space-y-2 pr-4">

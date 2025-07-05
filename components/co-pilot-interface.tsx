@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Send, Lightbulb, Star, Loader2, Network } from "lucide-react"
 
@@ -35,6 +35,8 @@ export default function CoPilotInterface({
   const [currentStage, setCurrentStage] = useState(feedbackMode ? "feedback" : stage)
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [showConversationHistory, setShowConversationHistory] = useState(false)
+
+  const conversationEndRef = useRef<HTMLDivElement>(null)
 
   // Reset conversation when stage changes to initial
   useEffect(() => {
@@ -82,7 +84,10 @@ export default function CoPilotInterface({
       let currentStep = 0
       const interval = setInterval(() => {
         if (currentStep < steps.length) {
-          setProcessingSteps((prev) => [...prev, steps[currentStep]])
+          const step = steps[currentStep]
+          if (step && step.trim()) {
+            setProcessingSteps((prev) => [...prev, step])
+          }
           currentStep++
         } else {
           clearInterval(interval)
@@ -102,6 +107,23 @@ export default function CoPilotInterface({
     }
   }, [isProcessing, companyName, onResponse, currentStage, onFeedbackComplete])
 
+  // Auto-scroll to bottom when new messages are added
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (conversationEndRef.current) {
+        conversationEndRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        })
+      }
+    }
+
+    // Small delay to ensure DOM has updated
+    const timeoutId = setTimeout(scrollToBottom, 100)
+
+    return () => clearTimeout(timeoutId)
+  }, [conversationHistory])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!userInput.trim()) return
@@ -118,15 +140,15 @@ export default function CoPilotInterface({
 
     if (currentStage === "initial") {
       setCompanyName(userInput)
-      assistantResponse = `Great! As ${userInput} is a global company, would you like me to focus on a specific geographical market? They operate in the US, India and Japan.`
+      assistantResponse = `Great! Would you like me to focus on a specific geographical market or region for ${userInput}? For example, North America, Europe, Asia Pacific, or would you prefer a global overview?`
       nextStage = "region"
       setCurrentStage("region")
     } else if (currentStage === "region") {
-      assistantResponse = `Of course! Since ${companyName} is a conglomerate, is there a specific area of the company or division which you would like me to focus on?`
+      assistantResponse = `Perfect! Is there a specific business area, division, or aspect of ${companyName} you'd like me to focus on? For example, their main products/services, a particular business unit, or would you prefer a comprehensive overview?`
       nextStage = "division"
       setCurrentStage("division")
     } else if (currentStage === "division") {
-      assistantResponse = `Makes sense - I'll draft an initial full report and once you approve it, I will then summarize into a concise brand summary. Sound good?`
+      assistantResponse = `Makes sense - I'll present you with an initial research draft which you will be able to refine or approve. Sound good?`
       nextStage = "confirmation"
       setCurrentStage("confirmation")
     } else if (currentStage === "confirmation") {
@@ -268,63 +290,66 @@ export default function CoPilotInterface({
               </div>
               <h2 className="text-xl font-bold uppercase tracking-wide">Generating Brand Research</h2>
               <div className="space-y-4 text-left">
-                {processingSteps.map((step, index) => (
-                  <div key={index} className="flex items-center gap-4">
-                    <div className="w-4 h-4 rounded-full bg-black"></div>
-                    <p className="text-body text-gray-800">{step}</p>
-                  </div>
-                ))}
+                {processingSteps
+                  .filter((step) => step && step.trim())
+                  .map((step, index) => (
+                    <div key={index} className="flex items-center gap-4">
+                      <div className="w-4 h-4 rounded-full bg-black"></div>
+                      <p className="text-body text-gray-800">{step}</p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
         ) : (
           <>
             {/* Conversation Thread - only show when not collapsed or not in feedback mode */}
-            {(!feedbackMode || !isCollapsed) && (
-              <div className="flex-1 space-y-6 mb-6 overflow-y-auto">
-                {/* Show conversation history toggle button in feedback mode */}
-                {feedbackMode && conversationHistory.length > 1 && (
-                  <div className="flex justify-center pb-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setShowConversationHistory(!showConversationHistory)}
-                      className="text-xs text-gray-500 hover:text-gray-700"
-                    >
-                      {showConversationHistory
-                        ? "Show less"
-                        : `View conversation history (${conversationHistory.length - 1} earlier messages)`}
-                    </Button>
-                  </div>
-                )}
+            <div className="flex-1 space-y-6 mb-6 overflow-y-auto max-h-[400px] scroll-smooth">
+              {/* Show conversation history toggle button in feedback mode */}
+              {feedbackMode && conversationHistory.length > 1 && (
+                <div className="flex justify-center pb-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowConversationHistory(!showConversationHistory)}
+                    className="text-xs text-gray-500 hover:text-gray-700"
+                  >
+                    {showConversationHistory
+                      ? "Show less"
+                      : `View conversation history (${conversationHistory.length - 1} earlier messages)`}
+                  </Button>
+                </div>
+              )}
 
-                {/* Display messages based on feedback mode and history toggle */}
-                {(feedbackMode && !showConversationHistory ? conversationHistory.slice(-1) : conversationHistory).map(
-                  (message, index, displayedMessages) => (
-                    <div
-                      key={feedbackMode && !showConversationHistory ? `recent-${index}` : index}
-                      className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                    >
-                      {message.role === "assistant" && (
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                          <Lightbulb className="h-4 w-4 text-gray-600" />
-                        </div>
-                      )}
-
-                      <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
-                        <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
+              {/* Display messages based on feedback mode and history toggle */}
+              {(feedbackMode && !showConversationHistory ? conversationHistory.slice(-1) : conversationHistory).map(
+                (message, index, displayedMessages) => (
+                  <div
+                    key={feedbackMode && !showConversationHistory ? `recent-${index}` : index}
+                    className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    {message.role === "assistant" && (
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                        <Lightbulb className="h-4 w-4 text-gray-600" />
                       </div>
+                    )}
 
-                      {message.role === "user" && (
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                          <Star className="h-4 w-4 text-gray-600" />
-                        </div>
-                      )}
+                    <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
+                      <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
                     </div>
-                  ),
-                )}
-              </div>
-            )}
+
+                    {message.role === "user" && (
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                        <Star className="h-4 w-4 text-gray-600" />
+                      </div>
+                    )}
+                  </div>
+                ),
+              )}
+
+              {/* Invisible element to scroll to */}
+              <div ref={conversationEndRef} className="h-1" />
+            </div>
 
             {/* Show current message when collapsed in feedback mode */}
             {feedbackMode && isCollapsed && (

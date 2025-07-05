@@ -46,8 +46,16 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
+                <h4 className="text-sm font-medium">Industry</h4>
+                <p className="text-sm text-muted-foreground">{company.industry}</p>
+              </div>
+              <div>
                 <h4 className="text-sm font-medium">Founded</h4>
                 <p className="text-sm text-muted-foreground">{new Date(company.foundingDate).toLocaleDateString()}</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-medium">Website</h4>
+                <p className="text-sm text-muted-foreground">{company.website}</p>
               </div>
               <div>
                 <h4 className="text-sm font-medium">Headquarters</h4>
@@ -61,24 +69,19 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
                 <h4 className="text-sm font-medium">Employees</h4>
                 <p className="text-sm text-muted-foreground">{company.employees.toLocaleString()}</p>
               </div>
-              <div>
-                <h4 className="text-sm font-medium">Website</h4>
-                <p className="text-sm text-muted-foreground">{company.website}</p>
-              </div>
-              <div>
-                <h4 className="text-sm font-medium">Last Updated</h4>
-                <p className="text-sm text-muted-foreground">{new Date(company.lastUpdated).toLocaleDateString()}</p>
-              </div>
             </div>
 
             <div>
-              <h4 className="text-sm font-medium">Target Audience</h4>
-              <p className="text-sm text-muted-foreground">{company.targetAudience}</p>
+              <h4 className="text-sm font-medium">Sponsorship Type</h4>
+              <p className="text-sm text-muted-foreground">
+                {company.sponsorshipTypes?.join(", ") || "Sports event, Conference, Non-profit"}
+              </p>
             </div>
 
-            <div>
-              <h4 className="text-sm font-medium">Strategic Focus</h4>
-              <p className="text-sm text-muted-foreground">{company.strategicFocus}</p>
+            <div className="flex justify-end pt-2">
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium">Last Updated:</span> {new Date(company.lastUpdated).toLocaleDateString()}
+              </p>
             </div>
           </TabsContent>
 
@@ -110,7 +113,7 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
               </AccordionItem>
 
               <AccordionItem value="sponsorship-history">
-                <AccordionTrigger>Sponsorship History</AccordionTrigger>
+                <AccordionTrigger>Key Sponsorships & Campaigns</AccordionTrigger>
                 <AccordionContent>
                   <p className="text-sm text-muted-foreground">
                     {company.companyName} has been active in sponsorships across
@@ -122,13 +125,25 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
               </AccordionItem>
 
               <AccordionItem value="market-position">
-                <AccordionTrigger>Market Position</AccordionTrigger>
+                <AccordionTrigger>Strategic Focus</AccordionTrigger>
                 <AccordionContent>
                   <p className="text-sm text-muted-foreground">
                     Within the {company.industry} industry, {company.companyName} has positioned itself as a key player
                     in the {company.division} division. Their target audience primarily consists of{" "}
                     {company.targetAudience}. The company's strategic focus on {company.strategicFocus} has helped them
                     maintain a competitive edge in the market.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="target-audience">
+                <AccordionTrigger>Target Audience</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-sm text-muted-foreground">
+                    {company.companyName} primarily targets {company.targetAudience}. Their marketing and partnership
+                    strategies are designed to reach this demographic through various channels and touchpoints. The
+                    company's approach to audience engagement focuses on building meaningful connections and delivering
+                    value that resonates with their core customer base.
                   </p>
                 </AccordionContent>
               </AccordionItem>
