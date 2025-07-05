@@ -44,15 +44,18 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
               <p className="mt-2 text-muted-foreground">{company.description}</p>
             </div>
 
-            <div>
-              <h4 className="text-sm font-medium">Industry</h4>
-              <p className="text-sm text-muted-foreground">{company.industry}</p>
-            </div>
-
             <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h4 className="text-sm font-medium">Industry</h4>
+                <p className="text-sm text-muted-foreground">{company.industry}</p>
+              </div>
               <div>
                 <h4 className="text-sm font-medium">Founded</h4>
                 <p className="text-sm text-muted-foreground">{new Date(company.foundingDate).toLocaleDateString()}</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-medium">Website</h4>
+                <p className="text-sm text-muted-foreground">{company.website}</p>
               </div>
               <div>
                 <h4 className="text-sm font-medium">Headquarters</h4>
@@ -66,14 +69,6 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
                 <h4 className="text-sm font-medium">Employees</h4>
                 <p className="text-sm text-muted-foreground">{company.employees.toLocaleString()}</p>
               </div>
-              <div>
-                <h4 className="text-sm font-medium">Website</h4>
-                <p className="text-sm text-muted-foreground">{company.website}</p>
-              </div>
-              <div>
-                <h4 className="text-sm font-medium">Last Updated</h4>
-                <p className="text-sm text-muted-foreground">{new Date(company.lastUpdated).toLocaleDateString()}</p>
-              </div>
             </div>
 
             <div>
@@ -84,6 +79,12 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
             <div>
               <h4 className="text-sm font-medium">Strategic Focus</h4>
               <p className="text-sm text-muted-foreground">{company.strategicFocus}</p>
+            </div>
+
+            <div className="flex justify-end pt-2">
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium">Last Updated:</span> {new Date(company.lastUpdated).toLocaleDateString()}
+              </p>
             </div>
           </TabsContent>
 
