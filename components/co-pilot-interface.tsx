@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Send, Lightbulb, Star, Loader2, Network } from "lucide-react"
 
@@ -35,6 +35,8 @@ export default function CoPilotInterface({
   const [currentStage, setCurrentStage] = useState(feedbackMode ? "feedback" : stage)
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [showConversationHistory, setShowConversationHistory] = useState(false)
+
+  const conversationEndRef = useRef<HTMLDivElement>(null)
 
   // Reset conversation when stage changes to initial
   useEffect(() => {
@@ -101,6 +103,23 @@ export default function CoPilotInterface({
       return () => clearInterval(interval)
     }
   }, [isProcessing, companyName, onResponse, currentStage, onFeedbackComplete])
+
+  // Auto-scroll to bottom when new messages are added
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (conversationEndRef.current) {
+        conversationEndRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        })
+      }
+    }
+
+    // Small delay to ensure DOM has updated
+    const timeoutId = setTimeout(scrollToBottom, 100)
+
+    return () => clearTimeout(timeoutId)
+  }, [conversationHistory])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -280,51 +299,52 @@ export default function CoPilotInterface({
         ) : (
           <>
             {/* Conversation Thread - only show when not collapsed or not in feedback mode */}
-            {(!feedbackMode || !isCollapsed) && (
-              <div className="flex-1 space-y-6 mb-6 overflow-y-auto">
-                {/* Show conversation history toggle button in feedback mode */}
-                {feedbackMode && conversationHistory.length > 1 && (
-                  <div className="flex justify-center pb-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setShowConversationHistory(!showConversationHistory)}
-                      className="text-xs text-gray-500 hover:text-gray-700"
-                    >
-                      {showConversationHistory
-                        ? "Show less"
-                        : `View conversation history (${conversationHistory.length - 1} earlier messages)`}
-                    </Button>
-                  </div>
-                )}
+            <div className="flex-1 space-y-6 mb-6 overflow-y-auto max-h-[400px] scroll-smooth">
+              {/* Show conversation history toggle button in feedback mode */}
+              {feedbackMode && conversationHistory.length > 1 && (
+                <div className="flex justify-center pb-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowConversationHistory(!showConversationHistory)}
+                    className="text-xs text-gray-500 hover:text-gray-700"
+                  >
+                    {showConversationHistory
+                      ? "Show less"
+                      : `View conversation history (${conversationHistory.length - 1} earlier messages)`}
+                  </Button>
+                </div>
+              )}
 
-                {/* Display messages based on feedback mode and history toggle */}
-                {(feedbackMode && !showConversationHistory ? conversationHistory.slice(-1) : conversationHistory).map(
-                  (message, index, displayedMessages) => (
-                    <div
-                      key={feedbackMode && !showConversationHistory ? `recent-${index}` : index}
-                      className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                    >
-                      {message.role === "assistant" && (
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                          <Lightbulb className="h-4 w-4 text-gray-600" />
-                        </div>
-                      )}
-
-                      <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
-                        <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
+              {/* Display messages based on feedback mode and history toggle */}
+              {(feedbackMode && !showConversationHistory ? conversationHistory.slice(-1) : conversationHistory).map(
+                (message, index, displayedMessages) => (
+                  <div
+                    key={feedbackMode && !showConversationHistory ? `recent-${index}` : index}
+                    className={`flex items-start gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    {message.role === "assistant" && (
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                        <Lightbulb className="h-4 w-4 text-gray-600" />
                       </div>
+                    )}
 
-                      {message.role === "user" && (
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
-                          <Star className="h-4 w-4 text-gray-600" />
-                        </div>
-                      )}
+                    <div className={`max-w-[80%] ${message.role === "user" ? "text-right" : "text-left"}`}>
+                      <p className="text-body text-gray-800 leading-relaxed">{message.content}</p>
                     </div>
-                  ),
-                )}
-              </div>
-            )}
+
+                    {message.role === "user" && (
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
+                        <Star className="h-4 w-4 text-gray-600" />
+                      </div>
+                    )}
+                  </div>
+                ),
+              )}
+
+              {/* Invisible element to scroll to */}
+              <div ref={conversationEndRef} className="h-1" />
+            </div>
 
             {/* Show current message when collapsed in feedback mode */}
             {feedbackMode && isCollapsed && (
