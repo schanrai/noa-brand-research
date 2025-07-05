@@ -14,6 +14,13 @@ interface MainContentProps {
   onReject: (companyId: string) => void
   searchStage: "initial" | "region" | "division" | "results"
   onChatResponse: (stage: string, value: string) => void
+  filters?: {
+    region: string
+    industry: string
+    sponsorshipType: string
+    size: string
+    revenue: string
+  }
 }
 
 export default function MainContent({
@@ -24,6 +31,7 @@ export default function MainContent({
   onReject,
   searchStage,
   onChatResponse,
+  filters = { region: "", industry: "", sponsorshipType: "", size: "", revenue: "" },
 }: MainContentProps) {
   const [expandedCompanyId, setExpandedCompanyId] = useState<string | null>(null)
   const [feedbackMode, setFeedbackMode] = useState(false)
@@ -65,8 +73,10 @@ export default function MainContent({
                   <Lightbulb className="h-4 w-4 text-gray-600" />
                 </div>
                 <p className="text-body text-gray-800 leading-relaxed">
-                  Chris, here are the results of your search for {searchResults[0]?.companyName || "the company"}, for
-                  the division of {searchResults[0]?.regions[0] || "North America"}.... now please approve or reject
+                  Chris, here are the results of your search for {searchResults[0]?.companyName || "the company"}
+                  {filters.region && `, ${filters.region}`}
+                  {filters.industry && ` for the ${filters.industry} division`}
+                  ... now please approve or reject
                 </p>
               </div>
             </div>

@@ -118,15 +118,15 @@ export default function CoPilotInterface({
 
     if (currentStage === "initial") {
       setCompanyName(userInput)
-      assistantResponse = `Great! As ${userInput} is a global company, would you like me to focus on a specific geographical market? They operate in the US, India and Japan.`
+      assistantResponse = `Great! Would you like me to focus on a specific geographical market or region for ${userInput}? For example, North America, Europe, Asia Pacific, or would you prefer a global overview?`
       nextStage = "region"
       setCurrentStage("region")
     } else if (currentStage === "region") {
-      assistantResponse = `Of course! Since ${companyName} is a conglomerate, is there a specific area of the company or division which you would like me to focus on?`
+      assistantResponse = `Perfect! Is there a specific business area, division, or aspect of ${companyName} you'd like me to focus on? For example, their main products/services, a particular business unit, or would you prefer a comprehensive overview?`
       nextStage = "division"
       setCurrentStage("division")
     } else if (currentStage === "division") {
-      assistantResponse = `Makes sense - I'll draft an initial full report and once you approve it, I will then summarize into a concise brand summary. Sound good?`
+      assistantResponse = `Makes sense - I'll present you with an initial research draft which you will be able to refine or approve. Sound good?`
       nextStage = "confirmation"
       setCurrentStage("confirmation")
     } else if (currentStage === "confirmation") {

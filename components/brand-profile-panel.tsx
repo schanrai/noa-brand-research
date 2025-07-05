@@ -44,6 +44,11 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
               <p className="mt-2 text-muted-foreground">{company.description}</p>
             </div>
 
+            <div>
+              <h4 className="text-sm font-medium">Industry</h4>
+              <p className="text-sm text-muted-foreground">{company.industry}</p>
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <h4 className="text-sm font-medium">Founded</h4>
