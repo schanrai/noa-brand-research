@@ -72,8 +72,10 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
             </div>
 
             <div>
-              <h4 className="text-sm font-medium">Target Audience</h4>
-              <p className="text-sm text-muted-foreground">{company.targetAudience}</p>
+              <h4 className="text-sm font-medium">Sponsorship Type</h4>
+              <p className="text-sm text-muted-foreground">
+                {company.sponsorshipTypes?.join(", ") || "Sports event, Conference, Non-profit"}
+              </p>
             </div>
 
             <div>
