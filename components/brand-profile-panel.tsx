@@ -125,7 +125,7 @@ export default function BrandProfilePanel({ company }: BrandProfilePanelProps) {
               </AccordionItem>
 
               <AccordionItem value="market-position">
-                <AccordionTrigger>Market Position</AccordionTrigger>
+                <AccordionTrigger>Strategic Focus</AccordionTrigger>
                 <AccordionContent>
                   <p className="text-sm text-muted-foreground">
                     Within the {company.industry} industry, {company.companyName} has positioned itself as a key player
