@@ -84,7 +84,10 @@ export default function CoPilotInterface({
       let currentStep = 0
       const interval = setInterval(() => {
         if (currentStep < steps.length) {
-          setProcessingSteps((prev) => [...prev, steps[currentStep]])
+          const step = steps[currentStep]
+          if (step && step.trim()) {
+            setProcessingSteps((prev) => [...prev, step])
+          }
           currentStep++
         } else {
           clearInterval(interval)
@@ -287,12 +290,14 @@ export default function CoPilotInterface({
               </div>
               <h2 className="text-xl font-bold uppercase tracking-wide">Generating Brand Research</h2>
               <div className="space-y-4 text-left">
-                {processingSteps.map((step, index) => (
-                  <div key={index} className="flex items-center gap-4">
-                    <div className="w-4 h-4 rounded-full bg-black"></div>
-                    <p className="text-body text-gray-800">{step}</p>
-                  </div>
-                ))}
+                {processingSteps
+                  .filter((step) => step && step.trim())
+                  .map((step, index) => (
+                    <div key={index} className="flex items-center gap-4">
+                      <div className="w-4 h-4 rounded-full bg-black"></div>
+                      <p className="text-body text-gray-800">{step}</p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
