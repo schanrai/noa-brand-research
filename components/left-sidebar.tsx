@@ -180,16 +180,9 @@ export default function LeftSidebar({ onSearch }: LeftSidebarProps) {
                 </SelectContent>
               </Select>
 
-              <div className="flex gap-2 mt-4">
-                <Button className="flex-1 btn-premium bg-black text-white hover:bg-gray-800" onClick={handleSearch}>
+              <div className="flex justify-end mt-4">
+                <Button className="w-1/2 btn-premium bg-black text-white hover:bg-gray-800" onClick={handleSearch}>
                   Search
-                </Button>
-                <Button
-                  variant="outline"
-                  className="flex-1 btn-premium border-gray-200 hover:bg-gray-50 bg-transparent"
-                  onClick={handleReset}
-                >
-                  Reset
                 </Button>
               </div>
             </div>
