@@ -20,6 +20,7 @@ interface MainContentProps {
     sponsorshipType: string
     size: string
     revenue: string
+    query?: string
   }
 }
 
@@ -49,7 +50,8 @@ export default function MainContent({
   }
 
   const handleReject = (companyId: string) => {
-    setFeedbackMode(true)
+    // Remove reject functionality for filtered CRM searches
+    // This function is no longer needed for filtered searches
   }
 
   return (
@@ -67,16 +69,20 @@ export default function MainContent({
         <div className="space-y-48">
           {!feedbackMode && (
             <div>
-              <h3 className="text-base font-bold uppercase tracking-wide mb-16">Research Result</h3>
+              <h3 className="text-base font-bold uppercase tracking-wide mb-16">CRM Search Results</h3>
               <div className="flex items-start gap-16 mb-48 p-24 border border-gray-200 rounded-lg bg-white">
                 <div className="flex-shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white">
                   <Lightbulb className="h-4 w-4 text-gray-600" />
                 </div>
                 <p className="text-body text-gray-800 leading-relaxed">
-                  Chris, here are the results of your search for {searchResults[0]?.companyName || "the company"}
-                  {filters.region && `, ${filters.region}`}
-                  {filters.industry && ` for the ${filters.industry} division`}
-                  ... now please approve or reject
+                  Chris, here are the companies from your CRM that match your search criteria
+                  {filters.query && ` for "${filters.query}"`}
+                  {filters.region && ` in ${filters.region}`}
+                  {filters.industry && ` in the ${filters.industry} industry`}
+                  {filters.sponsorshipType && ` with ${filters.sponsorshipType} sponsorship experience`}
+                  {filters.size && ` with ${filters.size} employees`}
+                  {filters.revenue && ` in the ${filters.revenue} revenue range`}. You can update any of these records
+                  to initiate further research.
                 </p>
               </div>
             </div>

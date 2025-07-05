@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ChevronDown, ChevronUp, Check, X } from "lucide-react"
+import { ChevronDown, ChevronUp, Check } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import ConfirmationModal from "./confirmation-modal"
 import { useCRMActions } from "@/hooks/use-crm-actions"
@@ -101,22 +101,13 @@ export default function BrandCard({
         {showActions && (
           <CardFooter className="flex justify-end gap-16 border-t border-gray-200 bg-edge px-24 py-16">
             <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRejectClick}
-              className="btn-premium border-gray-200 hover-scale bg-transparent"
-            >
-              <X className="mr-2 h-4 w-4" />
-              <span className="text-xs">Reject</span>
-            </Button>
-            <Button
               size="sm"
               onClick={handleApproveClick}
               className="btn-premium bg-black text-white hover:bg-gray-800"
               disabled={state.isLoading}
             >
               <Check className="mr-2 h-4 w-4" />
-              <span className="text-xs">{company.inCRM ? "Update CRM" : "Approve for CRM"}</span>
+              <span className="text-xs">Update CRM</span>
             </Button>
           </CardFooter>
         )}
