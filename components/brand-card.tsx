@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ChevronDown, ChevronUp, Check, X, MessageSquare } from "lucide-react"
+import { ChevronDown, ChevronUp, Check, X } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import ConfirmationModal from "./confirmation-modal"
 import { useCRMActions } from "@/hooks/use-crm-actions"
@@ -15,9 +15,8 @@ interface BrandCardProps {
   onToggleExpand: () => void
   onApprove: () => void
   onReject: () => void
-  onFeedback?: () => void
   showActions?: boolean
-  isAIResearch?: boolean
+  searchMode?: "new-research" | "crm-search"
 }
 
 export default function BrandCard({
@@ -26,15 +25,18 @@ export default function BrandCard({
   onToggleExpand,
   onApprove,
   onReject,
-  onFeedback,
   showActions = true,
-  isAIResearch = false,
+  searchMode = "new-research",
 }: BrandCardProps) {
   const [showModal, setShowModal] = useState(false)
   const { state } = useCRMActions()
 
   const handleApproveClick = () => {
-    setShowModal(true)
+    if (searchMode === "new-research") {
+      setShowModal(true) // Show confirmation modal for new companies
+    } else {
+      onApprove() // Direct update for existing CRM records
+    }
   }
 
   const handleModalConfirm = async () => {
@@ -46,8 +48,46 @@ export default function BrandCard({
     onReject()
   }
 
-  const handleFeedbackClick = () => {
-    onFeedback?.()
+  const getActionButtons = () => {
+    if (searchMode === "crm-search") {
+      // CRM search mode - only show update button
+      return (
+        <Button
+          size="sm"
+          onClick={handleApproveClick}
+          className="btn-premium bg-black text-white hover:bg-gray-800"
+          disabled={state.isLoading}
+        >
+          <Check className="mr-2 h-4 w-4" />
+          <span className="text-xs">Update CRM</span>
+        </Button>
+      )
+    } else {
+      // New research mode - show approve and reject buttons
+      return (
+        <>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleRejectClick}
+            className="btn-premium border-gray-300 hover:bg-gray-50 bg-transparent"
+            disabled={state.isLoading}
+          >
+            <X className="mr-2 h-4 w-4" />
+            <span className="text-xs">Reject</span>
+          </Button>
+          <Button
+            size="sm"
+            onClick={handleApproveClick}
+            className="btn-premium bg-black text-white hover:bg-gray-800"
+            disabled={state.isLoading}
+          >
+            <Check className="mr-2 h-4 w-4" />
+            <span className="text-xs">Approve for CRM</span>
+          </Button>
+        </>
+      )
+    }
   }
 
   return (
@@ -104,68 +144,25 @@ export default function BrandCard({
             </Button>
           </div>
         </CardContent>
-
         {showActions && (
           <CardFooter className="flex justify-end gap-16 border-t border-gray-200 bg-edge px-24 py-16">
-            {isAIResearch ? (
-              // AI Research flow - new company discovery
-              <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleFeedbackClick}
-                  className="btn-premium border border-gray-300 hover:bg-white bg-transparent"
-                  disabled={state.isLoading}
-                >
-                  <MessageSquare className="mr-2 h-4 w-4" />
-                  <span className="text-xs">Refine</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleRejectClick}
-                  className="btn-premium border border-gray-300 hover:bg-white bg-transparent"
-                  disabled={state.isLoading}
-                >
-                  <X className="mr-2 h-4 w-4" />
-                  <span className="text-xs">Reject</span>
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={handleApproveClick}
-                  className="btn-premium bg-black text-white hover:bg-gray-800"
-                  disabled={state.isLoading}
-                >
-                  <Check className="mr-2 h-4 w-4" />
-                  <span className="text-xs">Approve for CRM</span>
-                </Button>
-              </>
-            ) : (
-              // CRM search flow - existing company updates
-              <Button
-                size="sm"
-                onClick={handleApproveClick}
-                className="btn-premium bg-black text-white hover:bg-gray-800"
-                disabled={state.isLoading}
-              >
-                <Check className="mr-2 h-4 w-4" />
-                <span className="text-xs">Update CRM</span>
-              </Button>
-            )}
+            {getActionButtons()}
           </CardFooter>
         )}
       </Card>
 
-      {/* Modal confirmation */}
-      <ConfirmationModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        company={company}
-        onConfirm={handleModalConfirm}
-        onCancel={() => setShowModal(false)}
-        isLoading={state.isLoading}
-        isNewCompany={isAIResearch}
-      />
+      {/* Modal confirmation for new research mode */}
+      {searchMode === "new-research" && (
+        <ConfirmationModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          company={company}
+          onConfirm={handleModalConfirm}
+          onCancel={() => setShowModal(false)}
+          isLoading={state.isLoading}
+          mode="add" // New prop to distinguish add vs update
+        />
+      )}
     </>
   )
 }

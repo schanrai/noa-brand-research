@@ -12,8 +12,8 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [selectedCompany, setSelectedCompany] = useState<any>(null)
   const [searchStage, setSearchStage] = useState<"initial" | "region" | "division" | "results">("initial")
+  const [searchMode, setSearchMode] = useState<"new-research" | "crm-search">("new-research")
   const [filters, setFilters] = useState({
-    query: "",
     region: "",
     industry: "",
     sponsorshipType: "",
@@ -35,6 +35,7 @@ export default function Home() {
 
   const handleSearch = (newFilters: any) => {
     setFilters({ ...filters, ...newFilters })
+    setSearchMode("crm-search") // Switch to CRM search mode
 
     // Check if all filters are empty (this indicates a reset/clear all action)
     const allFiltersEmpty =
@@ -50,6 +51,7 @@ export default function Home() {
       setSearchStage("initial")
       setSearchResults([])
       setSelectedCompany(null)
+      setSearchMode("new-research") // Reset to new research mode
       return
     }
 
@@ -83,6 +85,7 @@ export default function Home() {
     }
 
     if (newFilters.size) {
+      // Add size filtering logic based on employee count
       const sizeRanges = {
         "1-10": [1, 10],
         "11-50": [11, 50],
@@ -100,6 +103,14 @@ export default function Home() {
       }
     }
 
+    if (newFilters.revenue) {
+      // Add revenue filtering logic - this would need more sophisticated parsing
+      // For now, we'll do a simple string match
+      results = results.filter((company) =>
+        company.annualRevenue.toLowerCase().includes(newFilters.revenue.toLowerCase()),
+      )
+    }
+
     setSearchResults(results)
     setSearchStage("results")
   }
@@ -111,7 +122,6 @@ export default function Home() {
   const handleApprove = (companyId: string) => {
     const company = searchResults.find((c) => c.id === companyId)
     if (company) {
-      // Determine if this is AI research (new company) or CRM update (existing company)
       const isNewCompany = !company.inCRM
 
       // Show success toast notification
@@ -150,14 +160,20 @@ export default function Home() {
   const handleToastDismiss = () => {
     setToastNotification({ ...toastNotification, show: false })
 
-    // For AI research results, reset to initial state after approval/rejection
-    const hasFilters = Object.values(filters).some((value) => value && value.trim() !== "")
-    if (!hasFilters) {
+    // For new research mode, reset to initial search state after toast is dismissed
+    if (searchMode === "new-research") {
       setTimeout(() => {
         setSearchStage("initial")
         setSearchResults([])
         setSelectedCompany(null)
-      }, 300)
+        setFilters({
+          region: "",
+          industry: "",
+          sponsorshipType: "",
+          size: "",
+          revenue: "",
+        })
+      }, 300) // Small delay to allow toast fade-out animation
     }
   }
 
@@ -167,8 +183,8 @@ export default function Home() {
       setSearchStage("initial")
       setSearchResults([])
       setSelectedCompany(null)
+      setSearchMode("new-research") // Reset to new research mode
       setFilters({
-        query: "",
         region: "",
         industry: "",
         sponsorshipType: "",
@@ -180,12 +196,14 @@ export default function Home() {
     } else if (stage === "division") {
       setSearchStage("division")
     } else if (stage === "results") {
+      setSearchMode("new-research") // Ensure we're in new research mode
+
       // Create a mock company based on the user's input or find existing one
       let companyResult = brandsData.companies.find((company) =>
         company.companyName.toLowerCase().includes(value.toLowerCase()),
       )
 
-      // If no existing company matches, create a mock one (NEW COMPANY - not in CRM)
+      // If no existing company matches, create a mock one (not in CRM)
       if (!companyResult) {
         companyResult = {
           id: "generated-1",
@@ -209,7 +227,7 @@ export default function Home() {
           outreachProfile: "Actively seeking strategic partnerships and sponsorship opportunities",
           lastUpdated: new Date().toISOString().split("T")[0],
           logo: "/placeholder.svg?height=80&width=80",
-          inCRM: false, // NEW COMPANY - not in CRM yet
+          inCRM: false, // New companies are not in CRM initially
           contacts: [
             {
               name: "John Smith",
@@ -220,6 +238,9 @@ export default function Home() {
             },
           ],
         }
+      } else {
+        // If using existing company, make sure it's not marked as in CRM for new research
+        companyResult = { ...companyResult, inCRM: false }
       }
 
       setSearchResults([companyResult])
@@ -240,7 +261,7 @@ export default function Home() {
           onReject={handleReject}
           searchStage={searchStage}
           onChatResponse={handleChatResponse}
-          filters={filters}
+          searchMode={searchMode}
         />
         <RightSidebar />
       </div>

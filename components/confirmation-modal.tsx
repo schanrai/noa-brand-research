@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { Building2, Users, MapPin, DollarSign, Calendar, AlertTriangle } from "lucide-react"
+import { Building2, Users, MapPin, DollarSign, Calendar } from "lucide-react"
 
 interface ConfirmationModalProps {
   isOpen: boolean
@@ -22,7 +22,7 @@ interface ConfirmationModalProps {
   onConfirm: () => void
   onCancel: () => void
   isLoading?: boolean
-  isNewCompany?: boolean
+  mode?: "add" | "update"
 }
 
 export default function ConfirmationModal({
@@ -32,21 +32,22 @@ export default function ConfirmationModal({
   onConfirm,
   onCancel,
   isLoading = false,
-  isNewCompany = false,
+  mode = "add",
 }: ConfirmationModalProps) {
   const [showDetails, setShowDetails] = useState(false)
 
   if (!company) return null
 
-  const modalTitle = isNewCompany
+  const isAddMode = mode === "add"
+  const modalTitle = isAddMode
     ? `ADD ${company.companyName.toUpperCase()} TO CRM?`
-    : `Update ${company.companyName} in CRM?`
-  const modalDescription = isNewCompany
+    : `UPDATE ${company.companyName.toUpperCase()} IN CRM?`
+  const modalDescription = isAddMode
     ? `This will add ${company.companyName} to your CRM with all available contact information and research data. You'll be able to track interactions and manage the relationship from your CRM dashboard.`
     : `This will update ${company.companyName} in your CRM with the latest research data and any new contact information discovered. You'll be able to track new interactions and manage the updated relationship from your CRM dashboard.`
 
-  const confirmButtonText = isNewCompany ? "Add to CRM" : "Update CRM"
-  const warningType = isNewCompany ? "blue" : "blue" // Both use blue for consistency
+  const buttonText = isAddMode ? "Add to CRM" : "Update CRM"
+  const loadingText = isAddMode ? "Adding to CRM..." : "Updating CRM..."
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -129,21 +130,6 @@ export default function ConfirmationModal({
             </div>
           )}
 
-          {/* Status notification */}
-          <div className="flex items-start gap-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <AlertTriangle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <div className="text-sm font-medium text-blue-800">
-                {isNewCompany ? "Adding new company to CRM" : "Updating existing CRM record"}
-              </div>
-              <div className="text-sm text-blue-700 mt-1">
-                {isNewCompany
-                  ? "This will create a new record with all discovered research data and contacts."
-                  : "This will refresh existing records with new research data and any additional contacts found."}
-              </div>
-            </div>
-          </div>
-
           {/* Expandable details */}
           <Button
             variant="ghost"
@@ -193,12 +179,12 @@ export default function ConfirmationModal({
             {isLoading ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                {isNewCompany ? "Adding to CRM..." : "Updating CRM..."}
+                {loadingText}
               </>
             ) : (
               <>
                 <Building2 className="h-4 w-4 mr-2" />
-                {confirmButtonText}
+                {buttonText}
               </>
             )}
           </Button>
