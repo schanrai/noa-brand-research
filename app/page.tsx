@@ -13,6 +13,7 @@ export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<any>(null)
   const [searchStage, setSearchStage] = useState<"initial" | "region" | "division" | "results">("initial")
   const [filters, setFilters] = useState({
+    query: "",
     region: "",
     industry: "",
     sponsorshipType: "",
@@ -82,7 +83,6 @@ export default function Home() {
     }
 
     if (newFilters.size) {
-      // Add size filtering logic based on employee count
       const sizeRanges = {
         "1-10": [1, 10],
         "11-50": [11, 50],
@@ -100,14 +100,6 @@ export default function Home() {
       }
     }
 
-    if (newFilters.revenue) {
-      // Add revenue filtering logic - this would need more sophisticated parsing
-      // For now, we'll do a simple string match
-      results = results.filter((company) =>
-        company.annualRevenue.toLowerCase().includes(newFilters.revenue.toLowerCase()),
-      )
-    }
-
     setSearchResults(results)
     setSearchStage("results")
   }
@@ -119,14 +111,17 @@ export default function Home() {
   const handleApprove = (companyId: string) => {
     const company = searchResults.find((c) => c.id === companyId)
     if (company) {
+      // Determine if this is AI research (new company) or CRM update (existing company)
+      const isNewCompany = !company.inCRM
+
       // Show success toast notification
       setToastNotification({
         show: true,
         type: "success",
         company: company,
-        message: company.inCRM
-          ? `${company.companyName} has been updated in your CRM.`
-          : `${company.companyName} has been added to your CRM.`,
+        message: isNewCompany
+          ? `${company.companyName} has been added to your CRM.`
+          : `${company.companyName} has been updated in your CRM.`,
       })
 
       // Update the company's CRM status in the results
@@ -155,19 +150,15 @@ export default function Home() {
   const handleToastDismiss = () => {
     setToastNotification({ ...toastNotification, show: false })
 
-    // Reset to initial search state after toast is dismissed
-    setTimeout(() => {
-      setSearchStage("initial")
-      setSearchResults([])
-      setSelectedCompany(null)
-      setFilters({
-        region: "",
-        industry: "",
-        sponsorshipType: "",
-        size: "",
-        revenue: "",
-      })
-    }, 300) // Small delay to allow toast fade-out animation
+    // For AI research results, reset to initial state after approval/rejection
+    const hasFilters = Object.values(filters).some((value) => value && value.trim() !== "")
+    if (!hasFilters) {
+      setTimeout(() => {
+        setSearchStage("initial")
+        setSearchResults([])
+        setSelectedCompany(null)
+      }, 300)
+    }
   }
 
   const handleChatResponse = (stage: string, value: string) => {
@@ -177,6 +168,7 @@ export default function Home() {
       setSearchResults([])
       setSelectedCompany(null)
       setFilters({
+        query: "",
         region: "",
         industry: "",
         sponsorshipType: "",
@@ -185,17 +177,15 @@ export default function Home() {
       })
     } else if (stage === "region") {
       setSearchStage("region")
-      // In a real app, this would update the chat history
     } else if (stage === "division") {
       setSearchStage("division")
-      // In a real app, this would update the chat history
     } else if (stage === "results") {
       // Create a mock company based on the user's input or find existing one
       let companyResult = brandsData.companies.find((company) =>
         company.companyName.toLowerCase().includes(value.toLowerCase()),
       )
 
-      // If no existing company matches, create a mock one
+      // If no existing company matches, create a mock one (NEW COMPANY - not in CRM)
       if (!companyResult) {
         companyResult = {
           id: "generated-1",
@@ -219,7 +209,7 @@ export default function Home() {
           outreachProfile: "Actively seeking strategic partnerships and sponsorship opportunities",
           lastUpdated: new Date().toISOString().split("T")[0],
           logo: "/placeholder.svg?height=80&width=80",
-          inCRM: false,
+          inCRM: false, // NEW COMPANY - not in CRM yet
           contacts: [
             {
               name: "John Smith",
@@ -250,6 +240,7 @@ export default function Home() {
           onReject={handleReject}
           searchStage={searchStage}
           onChatResponse={handleChatResponse}
+          filters={filters}
         />
         <RightSidebar />
       </div>

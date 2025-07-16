@@ -22,6 +22,7 @@ interface ConfirmationModalProps {
   onConfirm: () => void
   onCancel: () => void
   isLoading?: boolean
+  isNewCompany?: boolean
 }
 
 export default function ConfirmationModal({
@@ -31,10 +32,21 @@ export default function ConfirmationModal({
   onConfirm,
   onCancel,
   isLoading = false,
+  isNewCompany = false,
 }: ConfirmationModalProps) {
   const [showDetails, setShowDetails] = useState(false)
 
   if (!company) return null
+
+  const modalTitle = isNewCompany
+    ? `ADD ${company.companyName.toUpperCase()} TO CRM?`
+    : `Update ${company.companyName} in CRM?`
+  const modalDescription = isNewCompany
+    ? `This will add ${company.companyName} to your CRM with all available contact information and research data. You'll be able to track interactions and manage the relationship from your CRM dashboard.`
+    : `This will update ${company.companyName} in your CRM with the latest research data and any new contact information discovered. You'll be able to track new interactions and manage the updated relationship from your CRM dashboard.`
+
+  const confirmButtonText = isNewCompany ? "Add to CRM" : "Update CRM"
+  const warningType = isNewCompany ? "blue" : "blue" // Both use blue for consistency
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -51,9 +63,7 @@ export default function ConfirmationModal({
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
-              <DialogTitle className="text-xl font-bold uppercase tracking-wide text-left">
-                Update {company.companyName} in CRM?
-              </DialogTitle>
+              <DialogTitle className="text-xl font-bold uppercase tracking-wide text-left">{modalTitle}</DialogTitle>
               <p className="text-sm text-gray-600 font-medium uppercase tracking-wide mt-1">
                 {company.industry} • {company.hqLocation}
               </p>
@@ -62,13 +72,11 @@ export default function ConfirmationModal({
         </DialogHeader>
 
         <DialogDescription id="confirmation-description" className="text-base text-gray-700 leading-relaxed">
-          This will update {company.companyName} in your CRM with the latest research data and any new contact
-          information discovered. You'll be able to track new interactions and manage the updated relationship from your
-          CRM dashboard.
+          {modalDescription}
         </DialogDescription>
 
         <div className="space-y-6 py-4">
-          {/* Quick company overview */}
+          {/* Company overview */}
           <div className="bg-edge rounded-lg p-5 space-y-4">
             <h4 className="text-sm font-semibold uppercase tracking-wide">Company Overview</h4>
             <div className="grid grid-cols-2 gap-4 text-sm">
@@ -121,18 +129,20 @@ export default function ConfirmationModal({
             </div>
           )}
 
-          {/* Warning for existing CRM entries */}
-          {company.inCRM && (
-            <div className="flex items-start gap-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <AlertTriangle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <div className="text-sm font-medium text-blue-800">Updating existing CRM record</div>
-                <div className="text-sm text-blue-700 mt-1">
-                  This will refresh existing records with new research data and any additional contacts found.
-                </div>
+          {/* Status notification */}
+          <div className="flex items-start gap-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <AlertTriangle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <div className="text-sm font-medium text-blue-800">
+                {isNewCompany ? "Adding new company to CRM" : "Updating existing CRM record"}
+              </div>
+              <div className="text-sm text-blue-700 mt-1">
+                {isNewCompany
+                  ? "This will create a new record with all discovered research data and contacts."
+                  : "This will refresh existing records with new research data and any additional contacts found."}
               </div>
             </div>
-          )}
+          </div>
 
           {/* Expandable details */}
           <Button
@@ -183,12 +193,12 @@ export default function ConfirmationModal({
             {isLoading ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                Updating CRM...
+                {isNewCompany ? "Adding to CRM..." : "Updating CRM..."}
               </>
             ) : (
               <>
                 <Building2 className="h-4 w-4 mr-2" />
-                Update CRM
+                {confirmButtonText}
               </>
             )}
           </Button>
